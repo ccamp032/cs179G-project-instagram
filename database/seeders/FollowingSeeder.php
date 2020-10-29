@@ -15,7 +15,7 @@ class FollowingSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('following')->insert([
+        DB::table('followings')->insert([
             'user_id' => 1,
             'follower_user_id' => 2,
             'created_at' => now(), 
