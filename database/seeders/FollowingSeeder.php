@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Following;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class FollowingSeeder extends Seeder
 {
     /**
