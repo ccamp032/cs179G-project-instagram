@@ -19,5 +19,7 @@ class FollowersSeeder extends Seeder
             'created_at' => now(), 
             'updated_at' => now(),
         ]);
+
+        factory(Followers::class, 300)->create();
     }
 }

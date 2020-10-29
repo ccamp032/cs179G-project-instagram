@@ -1,6 +1,7 @@
 <?php
 namespace Database\Seeders;
 
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,5 +23,7 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        factory(User::class, 300)->create();
     }
 }
