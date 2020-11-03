@@ -20,6 +20,7 @@ $factory->define(UserTags::class, function (Faker $faker) {
   return [
       'post_id' => $faker->numberBetween(1,300),
       'user_id' => $faker->numberBetween(1,300),
+      'user_name' => $faker->name,
       'created_at' => $faker->date,
       'updated_at' => $faker->date,
   ];

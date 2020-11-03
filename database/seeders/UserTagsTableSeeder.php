@@ -18,6 +18,7 @@ class UserTagsTableSeeder extends Seeder
       DB::table('user_tags')->insert([
           'post_id' => 1,
           'user_id' => 1,
+          'user_name' => 'Franklin Joey',
           'created_at' => now(),
           'updated_at' => now()
       ]);
