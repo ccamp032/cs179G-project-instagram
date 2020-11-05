@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\DashboardController;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        //return view('dashboard');
+        $dbController = new DashboardController();
+        $postsArr = $dbController->loadDashboard();
+        // echo "<pre>";
+        // var_export($postsArr);
+        // echo "</pre>";
+        // exit;
+        return view('dashboard')->with('postsArr', $postsArr);
     }
 }
