@@ -15,6 +15,21 @@
 
 /*     brand Colors              */
 
+.stats-left {
+}
+
+.stats-middle {
+  text-align: center;
+}
+
+.stats-right {
+  text-align: right;
+}
+
+.stats-section {
+  width: 33%;
+}
+
 .card {
   font-size: .875rem;
 }
@@ -16804,7 +16819,7 @@ label {
 .card.bg-warning,
 .card.card-rotate.bg-warning .front,
 .card.card-rotate.bg-warning .back {
-  background: linear-gradient(60deg, #ffa726, #fb8c00);
+  background: linear-gradient(60deg, #74ff26, #0056fb);
 }
 
 .card .card-header-danger .card-icon,
