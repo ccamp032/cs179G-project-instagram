@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Following;
 use App\Posts;
 use App\Comments;
+use App\Followers;
 use App\LikesDislikes;
 use App\UserTags;
+use App\User;
 
 class DashboardController extends Controller
 {
@@ -42,8 +44,12 @@ class DashboardController extends Controller
           //get user_tags
           $user_tags = self::getPostUserTags($currentPost['id']);
 
+          //get user_info
+          $user_info = self::getPostUserInfo($currentPost['user_id']);
+
           $currentPostArr = [
             'post' => $currentPost,
+            'user_info' => $user_info[0],
             'comments' => $comments,
             'likes' => $likes['likes'],
             'dislikes' => $likes['dislikes'],
@@ -103,4 +109,36 @@ class DashboardController extends Controller
 
         return $returnArr;
     }
+
+    public static function getCurrentUserPosts() {
+        $user = auth()->user()->toArray();
+        $posts = Posts::where('user_id', '=', $user['id'])->get()->toArray();
+        return $posts;
+    }
+
+    public static function getFollowers() {
+        $user = auth()->user()->toArray();
+        $followers = Followers::where('user_id', '=', $user['id'])->get()->toArray();
+        return $followers;
+    }
+
+    public static function getFollowings() {
+        $user = auth()->user()->toArray();
+        $followings = Following::where('user_id', '=', $user['id'])->get()->toArray();
+        return $followings;
+    }
+
+    public static function getHCAY() {
+        $user = auth()->user()->toArray();
+        $likeCount = LikesDislikes::where('user_id', '=', $user['id'])->where('like', '=', 1)->get()->toArray();
+        $dislikeCount = LikesDislikes::where('user_id', '=', $user['id'])->where('like', '=', 0)->get()->toArray();
+        $hcay = count($likeCount) - count($dislikeCount);
+        return $hcay;
+    }
+
+    public static function getPostUserInfo($userId) {
+        $userInfo = User::where('id', '=', $userId)->get()->toArray();
+        return $userInfo;
+    }
+
 }

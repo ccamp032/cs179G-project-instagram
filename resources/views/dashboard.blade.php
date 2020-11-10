@@ -6,72 +6,79 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
+            <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">content_copy</i>
+                <i class="material-icons">amp_stories</i>
               </div>
-              <p class="card-category">Used Space</p>
-              <h3 class="card-title">49/50
-                <small>GB</small>
+              <p class="card-category">Total Posts</p>
+              <h3 class="card-title">{{count($myPosts)}}
+                @if(count($myPosts) > 1)
+                  <small>Post(s)</small>
+                @else
+                  <small>Post</small>
+                @endif
               </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons text-danger">warning</i>
-                <a href="#pablo">Get More Space...</a>
+                <i class="material-icons text-danger"></i>
+                <a href="#pablo"></a>
               </div>
             </div>
           </div>
-        </div>
+        </div>    
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">store</i>
-              </div>
-              <p class="card-category">Revenue</p>
-              <h3 class="card-title">$34,245</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">date_range</i> Last 24 Hours
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">info_outline</i>
-              </div>
-              <p class="card-category">Fixed Issues</p>
-              <h3 class="card-title">75</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">local_offer</i> Tracked from Github
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-twitter"></i>
+                <i class="material-icons">supervisor_account</i>
               </div>
               <p class="card-category">Followers</p>
-              <h3 class="card-title">+245</h3>
+              <h3 class="card-title">{{count($myFollowers)}}</h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">update</i> Just Updated
+                <i class="material-icons"></i>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-header card-header-icon">
+              <div class="card-icon" style="background-color: rgb(204, 0, 255)">
+                <i class="material-icons">redo</i>
+              </div>
+              <p class="card-category">Following</p>
+              <h3 class="card-title">{{count($myFollowings)}}</h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="material-icons"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-header card-header-icon">
+              <div class="card-icon" style="background-color: rgb(255, 187, 0)">
+                <i class="material-icons">grade</i>
+              </div>
+              <p class="card-category">H.C.A.Y</p>
+              <h3 class="card-title">{{$mySocialScore}}
+                <small>: {{$myRating}}</small>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="material-icons text-danger"></i>
+                <a href="#pablo"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>   
       <div class="row">
         @foreach($postsArr as $post)
           <div class="col-md-4">
@@ -81,7 +88,7 @@
               </div>
               <div class="card-body">
                 <h4 class="card-title">{{ $post['post']['description'] }}</h4>
-                <p class="card-category"> </p>
+              <p class="card-category">Posted By: {{ $post['user_info']['name'] }}<br>Date: {{date('m-d-Y', strtotime($post['post']['created_at']))}}</p>
               </div>
               <div class="card-footer">
                 <div class="stats" style="width: 100%; ">
