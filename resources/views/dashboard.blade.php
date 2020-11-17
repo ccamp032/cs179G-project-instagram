@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-        </div>    
+        </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
@@ -78,7 +78,7 @@
             </div>
           </div>
         </div>
-      </div>   
+      </div>
       <div class="row">
         @foreach($postsArr as $post)
           <div class="col-md-4">
