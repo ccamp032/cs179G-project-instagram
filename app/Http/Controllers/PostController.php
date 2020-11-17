@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use App\User;
+use App\Posts;
+use App\UserTags;
 
 
 class PostController extends Controller
@@ -33,9 +38,40 @@ class PostController extends Controller
         return back()->withStatus(__('Profile successfully updated.'));
     }
 
-    public function createPost($request) {
-      var_export("in create function");
-      exit;
+    public function createPost(Request $request) {
+      $user = auth()->user()->toArray();
+
+      if ($request->has('image')) {
+        $newPost = new Posts;
+
+        $image = $request->file('image');
+        // Make a image name based on user name and current timestamp
+        $name = Str::slug($user['id'].'_'.time());
+        // Define folder path
+        $folder = '/uploads/images/';
+        // Make a file path where image will be stored [ folder path + file name + file extension]
+        $filePath = "storage/" . $folder . $name. '.' . $image->getClientOriginalExtension();
+        // Upload image
+        $this->uploadOne($image, $folder, 'public', $name);
+
+        $newPost->img_url = $filePath;
+        $newPost->user_id = $user['id'];
+        $newPost->description = $request->input('description');
+        $newPost->views = 0;
+
+        $newPost->save();
+
+        $newUserTags = new UserTags;
+
+        $newUserTags->post_id = $newPost->id;
+        $newUserTags->user_id = $user['id'];
+        $newUserTags->user_name = $user['name'];
+
+        $newUserTags->save();
+        return redirect()->route('home')->with(['status' => 'Post created successfully.']);
+      } else {
+        return redirect()->back()->with(['status' => 'Error with image. Please try again.']);
+      }
     }
 
     public function getUserNames(Request $request){
@@ -51,5 +87,14 @@ class PostController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function uploadOne(UploadedFile $uploadedFile, $folder = null, $disk = 'public', $filename = null)
+    {
+        $name = !is_null($filename) ? $filename : Str::random(25);
+
+        $file = $uploadedFile->storeAs($folder, $name.'.'.$uploadedFile->getClientOriginalExtension(), $disk);
+
+        return $file;
     }
 }

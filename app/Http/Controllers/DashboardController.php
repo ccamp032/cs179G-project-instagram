@@ -33,7 +33,7 @@ class DashboardController extends Controller
 
         $following = Following::where('user_id', '=', $user['id'])->get()->toArray();
         $followingArr = array_column($following, 'follower_user_id');
-        $posts = Posts::whereIn('user_id', $followingArr)->orderBy('created_at', 'asc')->get()->toArray();
+        $posts = Posts::whereIn('user_id', $followingArr)->orderBy('created_at', 'desc')->get()->toArray();
 
         $returnPosts = [];
         foreach($posts as $currentPost) {

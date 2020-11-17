@@ -79,12 +79,17 @@
           </div>
         </div>
       </div>
+      @if (session('status'))
+          <div style="text-align: center; font-size:24px;" class="alert alert-success">
+              {{ session('status') }}
+          </div>
+      @endif
       <div class="row">
         @foreach($postsArr as $post)
           <div class="col-md-4">
             <div class="card card-chart">
               <div class="card-header card-header-warning">
-                <img style="width: 100%; " src="{{ $post['post']['img_url'] }}">
+                <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
               </div>
               <div class="card-body">
                 <h4 class="card-title">{{ $post['post']['description'] }}</h4>
