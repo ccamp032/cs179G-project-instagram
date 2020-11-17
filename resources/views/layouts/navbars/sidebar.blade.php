@@ -47,12 +47,6 @@
           </ul>
         </div>
       </li>
-      <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('user.index') }}">
-          <span class="sidebar-mini"> </span>
-          <span class="sidebar-normal"> {{ __('User Management') }} </span>
-        </a>
-      </li>
       <li class="nav-item{{ $activePage == 'icons' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('icons') }}">
           <i class="material-icons">bubble_chart</i>
