@@ -57,10 +57,11 @@
                   <label class="col-sm-2 col-form-label">{{ __('Tags') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('tags') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="tags" id="input-tags" type="text" placeholder="{{ __('Tags') }}" value="" required />
+                      <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="user_tags_name" id="input-tags" type="text" placeholder="{{ __('Tags') }}" value="" />
                       @if ($errors->has('tags'))
                         <span id="tags-error" class="error text-danger" for="input-tags">{{ $errors->first('tags') }}</span>
                       @endif
+                      <input type="hidden" id="user_tags_id" name="user_tags_id" value="" />
                     </div>
                   </div>
                 </div>
@@ -80,14 +81,21 @@
                                search: request.term
                             },
                             success: function( data ) {
-                               response( data );
+                               currentInput = $( "#input-tags" ).val();
+                               if (currentInput == "") {
+                                 $("#submit_post").attr("disabled", false);
+                               } else {
+                                 $("#submit_post").attr("disabled", true);
+                                response( data );
+                               }
                             }
                           });
                         },
                         select: function (event, ui) {
                            // Set selection
-                           $('#employee_search').val(ui.item.label); // display the selected text
-                           $('#employeeid').val(ui.item.value); // save selected id to input
+                           $("#input-tags").val(ui.item.label);
+                           $("#user_tags_id").val(ui.item.value);
+                           $("#submit_post").attr("disabled", false);
                            return false;
                         }
                       });
@@ -108,11 +116,12 @@
 
                       $("#input-image").change(function() {
                         readURL(this);
+
                       });
                 </script>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button type="submit" class="btn btn-primary">{{ __('Post') }}</button>
+                <button id="submit_post" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
               </div>
             </div>
           </form>

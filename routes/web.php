@@ -29,7 +29,7 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
-Route::post('/post/getUserNames/','PostController@getUserNames')->name('post.getUserNames');
+Route::post('/post/getUserNames/','App\Http\Controllers\PostController@getUserNames')->name('post.getUserNames');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
