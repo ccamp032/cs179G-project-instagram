@@ -31,6 +31,8 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->
 
 Route::post('/post/getUserNames/','App\Http\Controllers\PostController@getUserNames')->name('post.getUserNames');
 
+Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('search.search');
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
 		return view('pages.table_list');
@@ -63,9 +65,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-  Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
-  Route::put('post', ['as' => 'post.createPost', 'uses' => 'App\Http\Controllers\PostController@createPost']);
-  Route::get('dashboard', ['as' => 'dashboard.view', 'uses' => 'App\Http\Controllers\DashboardController@loadDashboard']);
+  	Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
+  	Route::put('post', ['as' => 'post.createPost', 'uses' => 'App\Http\Controllers\PostController@createPost']);
+	Route::get('dashboard', ['as' => 'dashboard.view', 'uses' => 'App\Http\Controllers\DashboardController@loadDashboard']);
+	//Route::post('search', ['as' => 'search.search', 'uses' => 'App\Http\Controllers\SearchController@search']);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
