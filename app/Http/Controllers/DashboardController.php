@@ -35,29 +35,7 @@ class DashboardController extends Controller
         $followingArr = array_column($following, 'follower_user_id');
         $posts = Posts::whereIn('user_id', $followingArr)->orderBy('created_at', 'desc')->get()->toArray();
 
-        $returnPosts = [];
-        foreach($posts as $currentPost) {
-          //get get comments
-          $comments = self::getPostComments($currentPost['id']);
-          //get likes/dislikes
-          $likes = self::getPostLikes($currentPost['id']);
-          //get user_tags
-          $user_tags = self::getPostUserTags($currentPost['id']);
-
-          //get user_info
-          $user_info = self::getPostUserInfo($currentPost['user_id']);
-
-          $currentPostArr = [
-            'post' => $currentPost,
-            'user_info' => $user_info[0],
-            'comments' => $comments,
-            'likes' => $likes['likes'],
-            'dislikes' => $likes['dislikes'],
-            'user_tags' => $user_tags
-          ];
-
-          array_push($returnPosts, $currentPostArr);
-        }
+        $returnPosts = self::buildPosts($posts);
 
         // echo "<pre>";
         // var_export($returnPosts);
@@ -65,6 +43,34 @@ class DashboardController extends Controller
         // exit;
 
         return $returnPosts;
+    }
+
+    public static function buildPosts($posts) {
+      $returnPosts = [];
+      foreach($posts as $currentPost) {
+        //get get comments
+        $comments = self::getPostComments($currentPost['id']);
+        //get likes/dislikes
+        $likes = self::getPostLikes($currentPost['id']);
+        //get user_tags
+        $user_tags = self::getPostUserTags($currentPost['id']);
+
+        //get user_info
+        $user_info = self::getPostUserInfo($currentPost['user_id']);
+
+        $currentPostArr = [
+          'post' => $currentPost,
+          'user_info' => $user_info[0],
+          'comments' => $comments,
+          'likes' => $likes['likes'],
+          'dislikes' => $likes['dislikes'],
+          'user_tags' => $user_tags
+        ];
+
+        array_push($returnPosts, $currentPostArr);
+      }
+
+      return $returnPosts;
     }
 
     public static function getPostComments($postId) {

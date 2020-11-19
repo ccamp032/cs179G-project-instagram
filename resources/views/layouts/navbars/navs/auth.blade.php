@@ -12,7 +12,15 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end">
       <form class="navbar-form" method="post" action="{{ route('search.search') }}">
+        @csrf
+        @method('put')
         <div class="input-group no-border">
+          <select name="search_method" style="margin-right: 20px; background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
+            width: 50%; border-left:none; border-right:none;">
+            <option value="users">Users</option>
+            <option value="description">Description</option>
+            <option value="user_tags">User Tags</option>
+          </select>
         <input type="text" value="" class="form-control" name ="search" placeholder="Search...">
         <button type="submit" class="btn btn-white btn-round btn-just-icon">
           <i class="material-icons">search</i>
