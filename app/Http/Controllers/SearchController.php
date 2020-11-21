@@ -16,21 +16,26 @@ class SearchController extends Controller
         $searchString = $request->search;
         $search_method = $request->search_method;
 
+        $users = [];
+        $posts = [];
+
+        //Users_name
         if ($search_method == "users") {
-          $result = self::getUsersByName($searchString);
-          return view('search')->with('searchUser', $result);
-        } else if ($search_method == "description") {
+          $users = self::getUsersByName($searchString);
+        } 
+        //Posts_description
+        else if ($search_method == "description") {
           $result = self::getPostsByDescription($searchString);
           $posts = DashboardController::buildPosts($result);
-          var_export($posts);
-          exit;
-          return view('search')->with('searchDescription', $posts);
-        } else {
-          //User_tags
+        }
+        //User_tags
+        else {
           $result = self::getPostsByUserTags($searchString);
           $posts = DashboardController::buildPosts($result);
-          return view('search')->with('searchUserTags', $posts);
         }
+
+        return view('search.search')->with('searchUser', $users)
+                                    ->with('searchPosts', $posts);
     }
 
     public static function getUsersByName($searchString)
