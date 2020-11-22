@@ -139,7 +139,21 @@ class DashboardController extends Controller
         $likeCount = LikesDislikes::where('user_id', '=', $user['id'])->where('like', '=', 1)->get()->toArray();
         $dislikeCount = LikesDislikes::where('user_id', '=', $user['id'])->where('like', '=', 0)->get()->toArray();
         $hcay = count($likeCount) - count($dislikeCount);
-        return $hcay;
+
+        if( $hcay < 0 )
+            $myRating = "Negatively Lame";
+        elseif( $hcay < 5 )
+            $myRating = "Super Lame";
+        elseif( $hcay < 10 )
+            $myRating = "Lame";
+        elseif( $hcay < 15 )
+            $myRating = "Getting There";
+        elseif( $hcay < 20 )
+            $myRating = "Somewhat Cool";
+        elseif( $hcay < 100 )
+            $myRating = "Super Awesome";
+
+        return [$hcay, $myRating];
     }
 
     public static function getPostUserInfo($userId) {
