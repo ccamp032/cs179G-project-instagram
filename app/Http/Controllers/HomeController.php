@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\DashboardController;
+
 
 class HomeController extends Controller
 {
@@ -23,12 +23,12 @@ class HomeController extends Controller
     public function index()
     {
         //return view('dashboard');
-        $dbController = new DashboardController();
-        $postsArr = $dbController->loadDashboard();
-        $myPosts = $dbController->getCurrentUserPosts();
-        $myFollowers = $dbController->getFollowers();
-        $myFollowings = $dbController->getFollowings();
-        $mySocialRating = $dbController->getHCAY();
+        $postsArr = DashboardController::loadDashboard();
+
+        $myPosts = PostController::getCurrentUserPosts();
+        $myFollowers = PostController::getFollowers();
+        $myFollowings = PostController::getFollowings();
+        $mySocialRating = PostController::getHCAY();
 
         // echo "<pre>";
         // var_export($postsArr);

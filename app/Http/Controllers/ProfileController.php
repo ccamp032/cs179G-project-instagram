@@ -6,8 +6,6 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
 
-use App\Http\Controllers\DashboardController;
-
 
 class ProfileController extends Controller
 {
@@ -24,14 +22,11 @@ class ProfileController extends Controller
 
     public function myProfile()
     {
-        $dbController = new DashboardController();
-        $posts = $dbController->getCurrentUserPosts();
-
-        $myPosts = $dbController->buildPosts($posts);
-
-        $myFollowers = $dbController->getFollowers();
-        $myFollowings = $dbController->getFollowings();
-        $mySocialRating = $dbController->getHCAY();
+        $posts = PostController::getCurrentUserPosts();
+        $myPosts = PostController::buildPosts($posts);
+        $myFollowers = PostController::getFollowers();
+        $myFollowings = PostController::getFollowings();
+        $mySocialRating = PostController::getHCAY();
 
         // echo "<pre>";
         // var_export($myPosts);

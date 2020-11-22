@@ -26,12 +26,12 @@ class SearchController extends Controller
         //Posts_description
         else if ($search_method == "description") {
           $result = self::getPostsByDescription($searchString);
-          $posts = DashboardController::buildPosts($result);
+          $posts = PostController::buildPosts($result);
         }
         //User_tags
         else {
           $result = self::getPostsByUserTags($searchString);
-          $posts = DashboardController::buildPosts($result);
+          $posts = PostController::buildPosts($result);
         }
 
         return view('search.search')->with('searchUser', $users)
