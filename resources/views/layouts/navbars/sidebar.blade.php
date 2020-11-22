@@ -14,18 +14,18 @@
       <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
           <i class="material-icons">dashboard</i>
-            <p>{{ __('Dashboard') }}</p>
+            <p>{{ __('My Dashboard') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('profile.edit') }}">
-          <i class="material-icons">dashboard</i>
-            <p>{{ __('User Profile') }}</p>
+      <li class="nav-item{{ $activePage == 'my-profile' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('profile.myprofile') }}">
+          <i class="material-icons">account_circle</i>
+            <p>{{ __('My Profile') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'create-post' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('post.create') }}">
-          <i class="material-icons">dashboard</i>
+          <i class="material-icons">post_add</i>
             <p>{{ __('Create Post') }}</p>
         </a>
       </li>
