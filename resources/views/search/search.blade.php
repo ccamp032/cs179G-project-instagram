@@ -22,7 +22,6 @@
                     Name
                   </th>
                   <th>
-                    Profile
                   </th>
                 </thead>
                 <tbody>
