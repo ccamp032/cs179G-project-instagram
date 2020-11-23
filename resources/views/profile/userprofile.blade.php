@@ -12,7 +12,7 @@
               </div>
               <p class="card-category">Total Posts</p>
               <h3 class="card-title">{{count($userPosts ?? '')}}
-                @if(count($userPosts ?? '') > 1)
+                @if(count($userPosts ?? '') == 0 || count($userPosts ?? '') > 1)
                   <small>Post(s)</small>
                 @else
                   <small>Post</small>
