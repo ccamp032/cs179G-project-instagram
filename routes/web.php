@@ -73,4 +73,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('myprofile', ['as' => 'profile.myprofile', 'uses' => 'App\Http\Controllers\ProfileController@myProfile']);
 	Route::put('myprofile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('myprofile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	Route::any('profile/{userId}', ['as' => 'profile.getProfile', 'uses' => 'App\Http\Controllers\ProfileController@getProfile']);
 });
