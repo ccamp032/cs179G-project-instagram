@@ -218,4 +218,42 @@ class PostController extends Controller
         $userInfo = User::where('id', '=', $userId)->get()->toArray();
         return $userInfo;
     }
+
+
+    // Functions to get user post and profile data
+    public static function getUserPosts($userId) {
+      $posts = Posts::where('user_id', '=', $userId)->get()->toArray();
+      return self::buildPosts($posts);
+    }
+
+    public static function getUserFollowers($userId) {
+      $followers = Followers::where('user_id', '=', $userId)->get()->toArray();
+      return $followers;
+    }
+
+    public static function getUserFollowings($userId) {
+      $followings = Following::where('user_id', '=', $userId)->get()->toArray();
+      return $followings;
+    }
+
+    public static function getUserHCAY($userId) {
+      $likeCount = LikesDislikes::where('user_id', '=', $userId)->where('like', '=', 1)->get()->toArray();
+      $dislikeCount = LikesDislikes::where('user_id', '=', $userId)->where('like', '=', 0)->get()->toArray();
+      $hcay = count($likeCount) - count($dislikeCount);
+
+      if( $hcay < 0 )
+          $myRating = "Negatively Lame";
+      elseif( $hcay < 5 )
+          $myRating = "Super Lame";
+      elseif( $hcay < 10 )
+          $myRating = "Lame";
+      elseif( $hcay < 15 )
+          $myRating = "Getting There";
+      elseif( $hcay < 20 )
+          $myRating = "Somewhat Cool";
+      elseif( $hcay < 100 )
+          $myRating = "Super Awesome";
+
+      return [$hcay, $myRating];
+  }
 }
