@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Posts;
 use App\UserTags;
-use App\Http\Controllers\DashboardController as DashboardController;
 
 
 class SearchController extends Controller
