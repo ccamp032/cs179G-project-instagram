@@ -176,7 +176,7 @@ class PostController extends Controller
 
     public static function getCurrentUserPosts() {
         $user = auth()->user()->toArray();
-        $posts = Posts::where('user_id', '=', $user['id'])->get()->toArray();
+        $posts = Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray();
         return $posts;
     }
 
@@ -222,7 +222,7 @@ class PostController extends Controller
 
     // Functions to get user post and profile data
     public static function getUserPosts($userId) {
-      $posts = Posts::where('user_id', '=', $userId)->get()->toArray();
+      $posts = Posts::where('user_id', '=', $userId)->orderBy('created_at', 'desc')->get()->toArray();
       return self::buildPosts($posts);
     }
 
