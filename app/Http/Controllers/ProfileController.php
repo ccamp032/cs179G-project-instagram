@@ -40,6 +40,23 @@ class ProfileController extends Controller
                                         ->with('myRating', $mySocialRating[1]);
     }
 
+    public static function getProfile($userId)
+    {
+        $userPosts = PostController::getUserPosts($userId);
+        $userFollowers = PostController::getUserFollowers($userId);
+        $userFollowings = PostController::getUserFollowings($userId);
+        $userSocialRating = PostController::getUserHCAY($userId);
+        // echo "<pre>";
+        // var_export($userPosts);
+        // echo "</pre>";
+        // exit;
+        return view('profile.userprofile')->with('userPosts', $userPosts)
+                                        ->with('userFollowers', $userFollowers)
+                                        ->with('userFollowings', $userFollowings)
+                                        ->with('userSocialScore', $userSocialRating[0])
+                                        ->with('userRating', $userSocialRating[1]);
+    }
+
     /**
      * Update the profile
      *
