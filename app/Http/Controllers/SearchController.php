@@ -45,7 +45,7 @@ class SearchController extends Controller
         return $userList;
     }
 
-    public static function removeElementWithValue($array, $key, $value) {  
+    private static function removeElementWithValue($array, $key, $value) {  
         foreach($array as $subKey => $subArray){
              if($subArray[$key] == $value){
                   unset($array[$subKey]);
