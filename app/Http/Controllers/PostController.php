@@ -262,4 +262,27 @@ class PostController extends Controller
 
       return [$hcay, $myRating];
   }
+
+  public static function likePhoto($postID, $userID) {
+    //check to see if row with $postID and $userID exists in like_dislikes table
+    //if yes: update to be like
+    //if no: create new row with like
+    //return "success"
+
+    // If there's a post with passed in postID and userID, set the like to 1.
+    // If no matching model exists, create one.
+    $like = LikesDislikes::updateOrCreate(
+        ['post_id' => $postID, 'user_id' => $userID],
+        ['like' => 1]
+    );
+
+    return 1;
+  }
+
+  public static function dislikePhoto($postID, $userID) {
+    //check to see if row with $postID and $userID exists in like_dislikes table
+    //if yes: update to be dislike
+    //if no: create new row with dislike
+    //return "success"
+  }
 }
