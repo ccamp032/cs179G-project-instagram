@@ -273,6 +273,15 @@ class PostController extends Controller
     //if yes: update to be like
     //if no: create new row with like
     //return "success"
+
+    // If there's a post with passed in postID and userID, set the like to 1.
+    // If no matching model exists, create one.
+    $like = LikesDislikes::updateOrCreate(
+        ['post_id' => $postID, 'user_id' => $userID],
+        ['like' => 1]
+    );
+
+    return 1;
   }
 
   public static function dislikePhoto($postID, $userID) {
