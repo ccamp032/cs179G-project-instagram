@@ -134,7 +134,18 @@ class PostController extends Controller
     public static function getPostComments($postId) {
         $comments = Comments::where('post_id', '=', $postId)->get()->toArray();
 
-        return $comments;
+        $commentsArr = [];
+        foreach ($comments as $comment) {
+          $currentArr['id'] = $comment['id'];
+          $currentArr['comment'] = $comment['comment'];
+          $currentArr['postDate'] = $comment['created_at'];
+          $userName = User::select('name')->where('id', '=', $comment['id'])->get()->toArray();
+          $currentArr['userName'] = $userName[0]['name'];
+
+          array_push($commentsArr, $currentArr);
+        }
+
+        return $commentsArr;
     }
 
     public static function getPostLikes($postId) {
