@@ -105,7 +105,9 @@
           <div class="col-md-4">
             <div class="card card-chart">
               <div class="card-header card-header-warning">
-                <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
+                <a href="#" data-toggle="modal" data-target="#post{{ $post['post']['id'] }}">
+                  <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
+                </a>
               </div>
               <div class="card-body">
                 <h4 class="card-title">{{ $post['post']['description'] }}</h4>
@@ -122,6 +124,63 @@
                   <div class="stats-right stats-section">
                     {{ $post['likes'] }} <i class="material-icons">thumb_up</i>  <i class="material-icons">thumb_down</i> {{ $post['dislikes'] }}
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="post{{ $post['post']['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content" style="width:120%;">
+                <div class="modal-header">
+                  <h5 class="modal-title" style="font-size:25px;" id="post{{ $post['post']['id'] }}lLabel">{{ $post['post']['description'] }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div style="width:70%; text-align:center; margin:auto;">
+                    <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
+                  </div>
+                  <br>
+                  <div style="width:100%; display:flex;">
+                    <div class="stats" style="width: 100%; display:flex;">
+                      <div class="stats-left stats-section">
+                        Views ({{$post['post']['views']}})
+                      </div>
+                      <div class="stats-middle stats-section">
+                        <a href="#" id="post{{ $post['post']['id'] }}commentsToggle" >Comments ({{count($post['comments'])}})</a>
+                      </div>
+                      <br>
+                      <div class="stats-right stats-section">
+                        {{ $post['likes'] }} <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>  <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i> {{ $post['dislikes'] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:none;" id="post{{ $post['post']['id'] }}commentsBox">
+                    @foreach($post['comments'] ?? '' as $comment)
+                    <br>
+                    <p style="float:left;">
+                      <bold style="font-weight:bold;">{{ $comment['userName'] }}:</bold> {{ $comment['comment'] }}
+                    </p>
+                    <p style="float:right;">
+                      Date: {{date('m-d-Y', strtotime($comment['postDate']))}}
+                    </p>
+                    <br>
+                    @endforeach
+                  </div>
+                  <script>
+                    $("#post{{ $post['post']['id'] }}commentsToggle").click(function(){
+                      if ($("#post{{ $post['post']['id'] }}commentsBox").is(':visible')) {
+                        $("#post{{ $post['post']['id'] }}commentsBox").slideUp();
+                      } else {
+                        $("#post{{ $post['post']['id'] }}commentsBox").slideDown();
+                      }
+                    })
+                  </script>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
