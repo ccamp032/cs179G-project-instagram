@@ -3,6 +3,32 @@
 @section('content')
   <div class="content">
     <div class="container-fluid">
+      <div class="row" style="padding-left:15px; padding-right:15px;">
+        <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">supervisor_account</i>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-sm-6" style="max-width: 100%; flex: 0 0 40%">
+                <div class="card card-stats">
+                  <p class="card-category" style="text-align: left; padding-left:15px; padding-top: 15px;">Name</p>
+                  <h3 class="card-title" style="text-align: left; padding-left:15px; padding-bottom: 15px; padding-right: 15px;">{{ $userInfo['name'] }}</h3>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6" style="max-width: 100%; flex: 0 0 40%">
+                <div class="card card-stats">
+                  <p class="card-category" style="text-align: left; padding-left:15px; padding-top: 15px;">Email</p>
+                  <h3 class="card-title" style="text-align: left; padding-left:15px; padding-bottom: 15px; padding-right: 15px;">{{ $userInfo['email'] }}</h3>
+                </div>
+              </div>
+              <div class="card-footer ml-auto mr-auto">
+                <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10)">{{ __('Follow') }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
