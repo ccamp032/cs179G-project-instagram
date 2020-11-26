@@ -39,7 +39,19 @@ class SearchController extends Controller
 
     public static function getUsersByName($searchString)
     {
-        return User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
+        $currentUser = auth()->user()->toArray();
+        $userList = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
+        $userList = self::removeElementWithValue($userList, 'id', $currentUser['id']);
+        return $userList;
+    }
+
+    public static function removeElementWithValue($array, $key, $value) {  
+        foreach($array as $subKey => $subArray){
+             if($subArray[$key] == $value){
+                  unset($array[$subKey]);
+             }
+        }
+        return $array;
     }
 
     public static function getPostsByDescription($searchString)
