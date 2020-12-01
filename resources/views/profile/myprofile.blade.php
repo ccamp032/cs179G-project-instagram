@@ -115,7 +115,7 @@
               </div>
               <div class="card-footer">
                 <div class="stats" style="width: 100%; ">
-                  <div class="stats-left stats-section">
+                  <div class="post{{ $post['post']['id'] }}Views stats-left stats-section">
                     Views ({{$post['post']['views']}})
                   </div>
                   <div class="stats-middle stats-section">
@@ -144,7 +144,7 @@
                   <br>
                   <div style="width:100%; display:flex;">
                     <div class="stats" style="width: 100%; display:flex;">
-                      <div class="stats-left stats-section">
+                      <div class="post{{ $post['post']['id'] }}Views stats-left stats-section">
                         Views ({{$post['post']['views']}})
                       </div>
                       <div class="stats-middle stats-section">
@@ -152,7 +152,11 @@
                       </div>
                       <br>
                       <div class="stats-right stats-section">
-                        {{ $post['likes'] }} <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>  <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i> {{ $post['dislikes'] }}
+                        <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCount">{{ $post['likes'] }}</p> <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Like">
+                          <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i></a>
+                          <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Dislike">
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i></a>
+                            <p style="display:inline" id="post{{ $post['post']['id'] }}DislikeCount">{{ $post['dislikes'] }}</a>
                       </div>
                     </div>
                   </div>
@@ -175,6 +179,59 @@
                       } else {
                         $("#post{{ $post['post']['id'] }}commentsBox").slideDown();
                       }
+                    });
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    $("#post{{ $post['post']['id'] }}").on('show.bs.modal', function (request, response) {
+                      $.ajax({
+                         type:'POST',
+                         url:"{{route('post.incrementViews')}}",
+                         data: {
+                            _token: CSRF_TOKEN,
+                            post_id: "{{ $post['post']['id'] }}"
+                         },
+                         success:function(data) {
+                            newViewsString = "Views (" + data + ")";
+                            $(".post{{ $post['post']['id'] }}Views").text(newViewsString);
+                         }
+                      });
+                    });
+
+                    $("#post{{ $post['post']['id'] }}Like").click(function(){
+                      $.ajax({
+                         type:'POST',
+                         url:"{{route('post.likePhoto')}}",
+                         data: {
+                            _token: CSRF_TOKEN,
+                            post_id: "{{ $post['post']['id'] }}"
+                         },
+                         success:function(data) {
+                           console.log(data)
+                          $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes)
+                          $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
+
+                          $("#post{{ $post['post']['id'] }}Like").css("color", "#2196f3");
+                          $("#post{{ $post['post']['id'] }}Dislike").css("color", "#6c757d");
+                         }
+                      });
+                    });
+
+                    $("#post{{ $post['post']['id'] }}Dislike").click(function(){
+                      $.ajax({
+                         type:'POST',
+                         url:"{{route('post.dislikePhoto')}}",
+                         data: {
+                            _token: CSRF_TOKEN,
+                            post_id: "{{ $post['post']['id'] }}"
+                         },
+                         success:function(data) {
+                           console.log(data)
+                           $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes);
+                           $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
+
+                           $("#post{{ $post['post']['id'] }}Like").css("color", "#6c757d");
+                           $("#post{{ $post['post']['id'] }}Dislike").css("color", "#f44336");
+                         }
+                      });
                     })
                   </script>
                 </div>

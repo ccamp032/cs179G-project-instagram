@@ -268,26 +268,67 @@ class PostController extends Controller
       return [$hcay, $myRating];
   }
 
-  public static function likePhoto($postID, $userID) {
-    //check to see if row with $postID and $userID exists in like_dislikes table
-    //if yes: update to be like
-    //if no: create new row with like
-    //return "success"
+  public static function likePhoto(Request $request) {
+    $user = auth()->user()->toArray();
 
-    // If there's a post with passed in postID and userID, set the like to 1.
-    // If no matching model exists, create one.
-    $like = LikesDislikes::updateOrCreate(
-        ['post_id' => $postID, 'user_id' => $userID],
-        ['like' => 1]
-    );
+    $postID = $request->post_id;
 
-    return 1;
+    $userID = $user['id'];
+
+    $like = LikesDislikes::where('post_id', '=', $postID)->where('user_id', '=', $userID)->first();
+
+    if ($like->count() == 0) {
+      $like = new LikesDislikes;
+      $like->post_id = $postID;
+      $like->user_id = $userID;
+    }
+
+    $like->like = 1;
+
+    $like->save();
+
+
+    $returnArr = self::getPostLikes($postID);
+
+    return response()->json($returnArr);
   }
 
-  public static function dislikePhoto($postID, $userID) {
-    //check to see if row with $postID and $userID exists in like_dislikes table
-    //if yes: update to be dislike
-    //if no: create new row with dislike
-    //return "success"
+  public static function dislikePhoto(Request $request) {
+    $user = auth()->user()->toArray();
+
+    $postID = $request->post_id;
+
+    $userID = $user['id'];
+
+    $like = LikesDislikes::where('post_id', '=', $postID)->where('user_id', '=', $userID)->first();
+
+    if ($like->count() == 0) {
+      $like = new LikesDislikes;
+      $like->post_id = $postID;
+      $like->user_id = $userID;
+    }
+
+    $like->like = 0;
+
+    $like->save();
+
+
+    $returnArr = self::getPostLikes($postID);
+
+    return response()->json($returnArr);
+  }
+
+  public static function incrementViews(Request $request) {
+    //increment number of views in posts table
+    $postId = $request->post_id;
+
+    $post = Posts::find($postId);
+
+    $numberOfViews = $post['views'] + 1;
+    $post->views = $numberOfViews;
+
+    $post->save();
+
+    return response()->json($numberOfViews);
   }
 }
