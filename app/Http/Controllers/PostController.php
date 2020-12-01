@@ -230,6 +230,12 @@ class PostController extends Controller
         return $userInfo;
     }
 
+    public static function getUserInfo() {
+      $user = auth()->user()->toArray();
+      $userInfo = User::where('id', '=', $user['id'])->get()->toArray();
+      return $userInfo[0];
+    }
+
 
     // Functions to get user post and profile data
     public static function getUserPosts($userId) {

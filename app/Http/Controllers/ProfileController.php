@@ -27,13 +27,15 @@ class ProfileController extends Controller
         $myFollowers = PostController::getFollowers();
         $myFollowings = PostController::getFollowings();
         $mySocialRating = PostController::getHCAY();
+        $myInfo = PostController::getUserInfo();
 
         // echo "<pre>";
-        // var_export($myPosts);
+        // var_export($myInfo);
         // echo "</pre>";
         // exit;
 
-        return view('profile.myprofile')->with('myPosts', $myPosts)
+        return view('profile.myprofile')->with('myInfo', $myInfo)
+                                        ->with('myPosts', $myPosts)
                                         ->with('myFollowers', $myFollowers)
                                         ->with('myFollowings', $myFollowings)
                                         ->with('mySocialScore', $mySocialRating[0])
@@ -46,15 +48,17 @@ class ProfileController extends Controller
         $userFollowers = PostController::getUserFollowers($userId);
         $userFollowings = PostController::getUserFollowings($userId);
         $userSocialRating = PostController::getUserHCAY($userId);
+        $userInfo = PostController::getPostUserInfo($userId)[0];
         // echo "<pre>";
-        // var_export($userPosts);
+        // var_export($userInfo);
         // echo "</pre>";
         // exit;
-        return view('profile.userprofile')->with('userPosts', $userPosts)
-                                        ->with('userFollowers', $userFollowers)
-                                        ->with('userFollowings', $userFollowings)
-                                        ->with('userSocialScore', $userSocialRating[0])
-                                        ->with('userRating', $userSocialRating[1]);
+        return view('profile.userprofile')->with('userInfo', $userInfo)
+                                          ->with('userPosts', $userPosts)
+                                          ->with('userFollowers', $userFollowers)
+                                          ->with('userFollowings', $userFollowings)
+                                          ->with('userSocialScore', $userSocialRating[0])
+                                          ->with('userRating', $userSocialRating[1]);
     }
 
     /**

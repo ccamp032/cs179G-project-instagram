@@ -9,12 +9,19 @@
             <div class="card-icon">
               <i class="material-icons">supervisor_account</i>
             </div>
-            <p class="card-category">Followers</p>
-            <h3 class="card-title">{{count($myFollowers)}}</h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="material-icons"></i>
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-sm-6" style="max-width: 100%; flex: 0 0 40%">
+                <div class="card card-stats">
+                  <p class="card-category" style="text-align: left; padding-left:15px; padding-top: 15px;">Name</p>
+                  <h3 class="card-title" style="text-align: left; padding-left:15px; padding-bottom: 15px; padding-right: 15px;">{{ $myInfo['name'] }}</h3>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6" style="max-width: 100%; flex: 0 0 40%">
+                <div class="card card-stats">
+                  <p class="card-category" style="text-align: left; padding-left:15px; padding-top: 15px;">Email</p>
+                  <h3 class="card-title" style="text-align: left; padding-left:15px; padding-bottom: 15px; padding-right: 15px;">{{ $myInfo['email'] }}</h3>
+                </div>
+              </div>  
             </div>
           </div>
         </div>
