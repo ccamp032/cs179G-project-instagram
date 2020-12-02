@@ -155,6 +155,9 @@
                     </p>
                     <br>
                     @endforeach
+                    <hr>
+                    <input type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
+                    <button id="submit_comment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
                   </div>
                   <script>
                     $("#post{{ $post['post']['id'] }}commentsToggle").click(function(){
