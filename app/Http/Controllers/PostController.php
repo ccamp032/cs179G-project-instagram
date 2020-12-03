@@ -154,11 +154,12 @@ class PostController extends Controller
     }
 
     public static function likedImage($postId, $userId) {
-        $likedImage = LikesDislikes::where("post_id", '=', $postId)->where('user_id', '=', $userId)->first()->toArray();
-        if (count($likedImage) == 0) {
+        $likedImage = LikesDislikes::where("post_id", '=', $postId)->where('user_id', '=', $userId)->first();
+        if (is_null($likedImage)) {
           return 2;
         } else {
-          return $likedImage['like'];
+          $image = $likedImage->toArray();
+          return $image['like'];
         }
     }
 
