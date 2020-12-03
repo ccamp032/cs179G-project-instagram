@@ -54,7 +54,7 @@ class ProfileController extends Controller
         $userInfo = PostController::getPostUserInfo($userId)[0];
         $followingUser = PostController::isFollowingUser($userId);
         // echo "<pre>";
-        // var_export($userInfo);
+        // var_export($followingUser);
         // echo "</pre>";
         // exit;
         return view('profile.userprofile')->with('userInfo', $userInfo)

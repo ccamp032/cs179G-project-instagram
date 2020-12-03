@@ -23,7 +23,11 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10);" value="Follow">{{ __('Follow') }}</button>
+                @if($isFollowing)
+                  <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10);" value="Unfollow">{{ __('Unfollow') }}</button>
+                @else
+                  <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10);" value="Follow">{{ __('Follow') }}</button>
+                @endif
               </div>
               <script>
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
