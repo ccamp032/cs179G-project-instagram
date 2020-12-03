@@ -91,16 +91,16 @@ class ProfileController extends Controller
     }
 
     public static function followUser(Request $request) {
-        $currentUser = $user = auth()->user()->toArray();
-        $user = $request->user_id;
+        $currentUser = auth()->user()->toArray();
+        $userId = $request->user_id;
 
         $following = new Following();
         $following->user_id = $currentUser['id'];
-        $following->follower_user_id = $user['id'];
+        $following->follower_user_id = $userId;
 
         $follower = new Followers();
-        $follower->user_id = $user['id'];
-        $follower->followe_user_id = $currentUser['id'];
+        $follower->user_id = $userId;
+        $follower->follower_user_id = $currentUser['id'];
 
         $following->save();
         $follower->save();
