@@ -104,12 +104,17 @@ class ProfileController extends Controller
 
         $following->save();
         $follower->save();
-        return response()->json("test1");
+        return response()->json("Followed " . $userId);
     }
 
     public static function unfollowUser(Request $request) {
-        $currentUser = $user = auth()->user()->toArray();
-        $user = $request->user_id;
-        return response()->json("test2");
+        $currentUser = auth()->user()->toArray();
+        $userId = $request->user_id;
+
+        $following = Following::where('user_id', '=', $currentUser['id'])->where('follower_user_id', '=', $userId)->delete();
+
+        $follower = Followers::where('user_id', '=', $userId)->where('follower_user_id', '=', $currentUser['id'])->delete();
+
+        return response()->json("Unfollowed " . $userId);
     }
 }
