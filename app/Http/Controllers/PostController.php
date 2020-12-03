@@ -104,6 +104,7 @@ class PostController extends Controller
     }
 
     public static function buildPosts($posts) {
+      $user = auth()->user()->toArray();
       $returnPosts = [];
       foreach($posts as $currentPost) {
         //get get comments
@@ -116,13 +117,17 @@ class PostController extends Controller
         //get user_info
         $user_info = self::getPostUserInfo($currentPost['user_id']);
 
+        //check if user liked this post or not
+        $likedImage = self::likedImage($currentPost['id'], $user['id']);
+
         $currentPostArr = [
-          'post' => $currentPost,
-          'user_info' => $user_info[0],
-          'comments' => $comments,
-          'likes' => $likes['likes'],
-          'dislikes' => $likes['dislikes'],
-          'user_tags' => $user_tags
+          'post'        => $currentPost,
+          'user_info'   => $user_info[0],
+          'comments'    => $comments,
+          'likes'       => $likes['likes'],
+          'dislikes'    => $likes['dislikes'],
+          'user_tags'   => $user_tags,
+          'likedImage'  => $likedImage
         ];
 
         array_push($returnPosts, $currentPostArr);
@@ -146,6 +151,15 @@ class PostController extends Controller
         }
 
         return $commentsArr;
+    }
+
+    public static function likedImage($postId, $userId) {
+        $likedImage = LikesDislikes::where("post_id", '=', $postId)->where('user_id', '=', $userId)->first()->toArray();
+        if (count($likedImage) == 0) {
+          return 2;
+        } else {
+          return $likedImage['like'];
+        }
     }
 
     public static function getPostLikes($postId) {
