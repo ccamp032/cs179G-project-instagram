@@ -36,6 +36,8 @@ Route::post('/post/incrementViews/','App\Http\Controllers\PostController@increme
 Route::post('/post/likePhoto/','App\Http\Controllers\PostController@likePhoto')->name('post.likePhoto');
 Route::post('/post/dislikePhoto/','App\Http\Controllers\PostController@dislikePhoto')->name('post.dislikePhoto');
 
+Route::post('/post/addComment/','App\Http\Controllers\PostController@addComment')->name('post.addComment');
+
 Route::post('/profile/followUser/', 'App\Http\Controllers\ProfileController@followUser')->name('profile.followUser');
 Route::post('/profile/unfollowUser/', 'App\Http\Controllers\ProfileController@unfollowUser')->name('profile.unfollowUser');
 
