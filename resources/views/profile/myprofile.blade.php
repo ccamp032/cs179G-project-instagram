@@ -21,7 +21,7 @@
                   <p class="card-category" style="text-align: left; padding-left:15px; padding-top: 15px;">Email</p>
                   <h3 class="card-title" style="text-align: left; padding-left:15px; padding-bottom: 15px; padding-right: 15px;">{{ $myInfo['email'] }}</h3>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
         </div>
@@ -159,10 +159,22 @@
                       </div>
                       <br>
                       <div class="stats-right stats-section">
-                        <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCount">{{ $post['likes'] }}</p> <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Like">
-                          <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i></a>
+                        <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCount">{{ $post['likes'] }}</p>
+                        @if($post['likes'] == 1)
+                        <a style="color:#2196f3;" href="#" id="post{{ $post['post']['id'] }}Like">
+                          <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
+                        </a>
                           <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Dislike">
-                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i></a>
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i>
+                          </a>
+                          @else
+                          <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Like">
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
+                          </a>
+                            <a style="color:#f44336;" href="#" id="post{{ $post['post']['id'] }}Dislike">
+                              <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i>
+                            </a>
+                          @endif
                             <p style="display:inline" id="post{{ $post['post']['id'] }}DislikeCount">{{ $post['dislikes'] }}</a>
                       </div>
                     </div>
