@@ -26,7 +26,7 @@
                 @if($isFollowing)
                   <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10);" value="Unfollow">{{ __('Unfollow') }}</button>
                 @else
-                  <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10);" value="Follow">{{ __('Follow') }}</button>
+                  <button id="follow" type="submit" class="btn btn-primary" style="background-color:#4caf50;" value="Follow">{{ __('Follow') }}</button>
                 @endif
               </div>
               <script>
@@ -43,8 +43,7 @@
                         },
                         success:function(data) {
                           console.log(data)
-                          $("#follow").val("Unfollow");
-                          $("#follow").text("Unfollow");
+                          $("#follow").val("Unfollow").text("Unfollow").css("background-color", "rgb(201, 10, 10)");
                         }
                       });
                   } else {
@@ -57,8 +56,7 @@
                         },
                         success:function(data) {
                           console.log(data)
-                          $("#follow").val("Follow");
-                          $("#follow").text("Follow");
+                          $("#follow").val("Follow").text("Follow").css("background-color", "#4caf50");
                         }
                       });
                   }
