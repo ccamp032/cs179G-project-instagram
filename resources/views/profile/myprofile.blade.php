@@ -183,7 +183,7 @@
                     @foreach($post['comments'] ?? '' as $comment)
                     <br>
                     <p style="float:left;">
-                      <bold style="font-weight:bold;">{{ $comment['userName'] }}:</bold> {{ $comment['comment'] }}
+                      <bold style="font-weight:bold;">{{ $comment['userName'] }}: </bold> {{ $comment['comment'] }}
                     </p>
                     <p style="float:right;">
                       Date: {{date('m-d-Y', strtotime($comment['postDate']))}}
@@ -191,15 +191,19 @@
                     <br>
                     @endforeach
                     <hr>
-                    <input id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
-                    <button id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
-                  </div>
+                    </div>
+                    <input style="display:none; width:80%;" id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
+                    <button style="display:none;" id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
                   <script>
                     $("#post{{ $post['post']['id'] }}commentsToggle").click(function(){
                       if ($("#post{{ $post['post']['id'] }}commentsBox").is(':visible')) {
                         $("#post{{ $post['post']['id'] }}commentsBox").slideUp();
+                        $("#post{{ $post['post']['id'] }}newComment").slideUp();
+                        $("#post{{ $post['post']['id'] }}submitComment").slideUp();
                       } else {
                         $("#post{{ $post['post']['id'] }}commentsBox").slideDown();
+                        $("#post{{ $post['post']['id'] }}newComment").slideDown();
+                        $("#post{{ $post['post']['id'] }}submitComment").slideDown();
                       }
                     });
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -256,6 +260,12 @@
                       });
                     })
 
+                    $("#post{{ $post['post']['id'] }}newComment").on('keyup', function (e) {
+                        if (e.key === 'Enter' || e.keyCode === 13) {
+                            $("#post{{ $post['post']['id'] }}submitComment").click();
+                        }
+                    });
+
                     $("#post{{ $post['post']['id'] }}submitComment").click(function(){
                       newComment = $("#post{{ $post['post']['id'] }}newComment").val();
                       $.ajax({
@@ -267,8 +277,25 @@
                             comment: newComment,
                          },
                          success:function(data) {
-                           console.log(data)
+                           // console.log(data);
                            $("#post{{ $post['post']['id'] }}newComment").val('');
+                           $("#post{{ $post['post']['id'] }}commentsBox").empty();
+                           data.forEach(function (item, index) {
+                             console.log(item, index);
+                             console.log(item['id']);
+                             date = new Date(item['postDate']);
+                             $("#post{{ $post['post']['id'] }}commentsBox").append("\
+                             <br>\
+                             <p style='float:left;'>\
+                               <bold style='font-weight:bold;'>" + item['userName'] + ": </bold>"+ item['comment'] + "\
+                             </p>\
+                             <p style='float:right;'>\
+                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() :
+                               ('0' + date.getDate())) + '-' + date.getFullYear() + "\
+                             </p>\
+                             <br>")
+                           });
+
                          }
                       });
                     })
