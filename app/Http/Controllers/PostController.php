@@ -283,7 +283,7 @@ class PostController extends Controller
 
     $like = LikesDislikes::where('post_id', '=', $postID)->where('user_id', '=', $userID)->first();
 
-    if ($like->count() == 0) {
+    if (empty($like)) {
       $like = new LikesDislikes;
       $like->post_id = $postID;
       $like->user_id = $userID;
@@ -308,7 +308,7 @@ class PostController extends Controller
 
     $like = LikesDislikes::where('post_id', '=', $postID)->where('user_id', '=', $userID)->first();
 
-    if ($like->count() == 0) {
+    if (empty($like)) {
       $like = new LikesDislikes;
       $like->post_id = $postID;
       $like->user_id = $userID;
