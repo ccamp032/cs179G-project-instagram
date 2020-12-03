@@ -168,8 +168,8 @@
                     <br>
                     @endforeach
                     <hr>
-                    <input type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
-                    <button id="submit_comment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
+                    <input id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
+                    <button id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
                   </div>
                   <script>
                     $("#post{{ $post['post']['id'] }}commentsToggle").click(function(){
@@ -229,6 +229,23 @@
 
                            $("#post{{ $post['post']['id'] }}Like").css("color", "#6c757d");
                            $("#post{{ $post['post']['id'] }}Dislike").css("color", "#f44336");
+                         }
+                      });
+                    })
+
+                    $("#post{{ $post['post']['id'] }}submitComment").click(function(){
+                      newComment = $("#post{{ $post['post']['id'] }}newComment").val();
+                      $.ajax({
+                         type:'POST',
+                         url:"{{route('post.addComment')}}",
+                         data: {
+                            _token: CSRF_TOKEN,
+                            post_id: "{{ $post['post']['id'] }}",
+                            comment: newComment,
+                         },
+                         success:function(data) {
+                           console.log(data)
+                           $("#post{{ $post['post']['id'] }}newComment").val('');
                          }
                       });
                     })
