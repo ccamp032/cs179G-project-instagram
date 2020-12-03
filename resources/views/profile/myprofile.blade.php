@@ -256,6 +256,7 @@
                          },
                          success:function(data) {
                            console.log(data)
+                           $("#post{{ $post['post']['id'] }}newComment").val('');
                          }
                       });
                     })
