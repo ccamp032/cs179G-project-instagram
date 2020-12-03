@@ -36,6 +36,9 @@ Route::post('/post/incrementViews/','App\Http\Controllers\PostController@increme
 Route::post('/post/likePhoto/','App\Http\Controllers\PostController@likePhoto')->name('post.likePhoto');
 Route::post('/post/dislikePhoto/','App\Http\Controllers\PostController@dislikePhoto')->name('post.dislikePhoto');
 
+Route::post('/profile/followUser/', 'App\Http\Controllers\ProfileController@followUser')->name('profile.followUser');
+Route::post('/profile/unfollowUser/', 'App\Http\Controllers\ProfileController@unfollowUser')->name('profile.unfollowUser');
+
 // Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('search.search');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -70,7 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-  Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
+ 	Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
  	Route::put('post', ['as' => 'post.createPost', 'uses' => 'App\Http\Controllers\PostController@createPost']);
 	Route::get('dashboard', ['as' => 'dashboard.view', 'uses' => 'App\Http\Controllers\DashboardController@loadDashboard']);
 	Route::put('search', ['as' => 'search.search', 'uses' => 'App\Http\Controllers\SearchController@search']);

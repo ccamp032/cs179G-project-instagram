@@ -23,8 +23,43 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10)">{{ __('Follow') }}</button>
+                <button id="follow" type="submit" class="btn btn-primary" style="background-color:rgb(201, 10, 10);" value="Follow">{{ __('Follow') }}</button>
               </div>
+              <script>
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $("#follow").click(function() {
+                  var value=$(this).val();
+                  if (value == "Follow") {
+                      $.ajax({
+                        type: 'POST',
+                        url: "{{ route('profile.followUser') }}",
+                        data: {
+                           _token: CSRF_TOKEN,
+                           user_id: "{{ $userInfo['id'] }}"
+                        },
+                        success:function(data) {
+                          console.log(data)
+                          $("#follow").val("Unfollow");
+                          $("#follow").text("Unfollow");
+                        }
+                      });
+                  } else {
+                      $.ajax({
+                        type: 'POST',
+                        url: "{{ route('profile.unfollowUser') }}",
+                        data: {
+                           _token: CSRF_TOKEN,
+                           user_id: "{{ $userInfo['id'] }}"
+                        },
+                        success:function(data) {
+                          console.log(data)
+                          $("#follow").val("Follow");
+                          $("#follow").text("Follow");
+                        }
+                      });
+                  }
+                });
+              </script>
             </div>
           </div>
         </div>
@@ -219,7 +254,7 @@
                          },
                          success:function(data) {
                            console.log(data)
-                          $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes)
+                          $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes);
                           $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
 
                           $("#post{{ $post['post']['id'] }}Like").css("color", "#2196f3");

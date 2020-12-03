@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Followers;
+use App\Following;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 
 class ProfileController extends Controller
@@ -85,5 +88,28 @@ class ProfileController extends Controller
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
         return back()->withStatusPassword(__('Password successfully updated.'));
+    }
+
+    public static function followUser(Request $request) {
+        $currentUser = $user = auth()->user()->toArray();
+        $user = $request->user_id;
+
+        $following = new Following();
+        $following->user_id = $currentUser['id'];
+        $following->follower_user_id = $user['id'];
+
+        $follower = new Followers();
+        $follower->user_id = $user['id'];
+        $follower->followe_user_id = $currentUser['id'];
+
+        $following->save();
+        $follower->save();
+        return response()->json("test1");
+    }
+
+    public static function unfollowUser(Request $request) {
+        $currentUser = $user = auth()->user()->toArray();
+        $user = $request->user_id;
+        return response()->json("test2");
     }
 }
