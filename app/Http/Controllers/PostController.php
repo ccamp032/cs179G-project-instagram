@@ -203,6 +203,18 @@ class PostController extends Controller
         return $followings;
     }
 
+    public static function isFollowingUser($followerId) {
+      $user = auth()->user()->toArray();
+
+      $isFollowing = Following::where('user_id', '=', $user['id'])->where('follower_user_id', '=', $followerId)->get()->toArray();
+
+      if (count($isFollowing) > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     public static function getHCAY() {
         $user = auth()->user()->toArray();
         $likeCount = LikesDislikes::where('user_id', '=', $user['id'])->where('like', '=', 1)->get()->toArray();

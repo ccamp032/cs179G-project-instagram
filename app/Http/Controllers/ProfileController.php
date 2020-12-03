@@ -52,6 +52,7 @@ class ProfileController extends Controller
         $userFollowings = PostController::getUserFollowings($userId);
         $userSocialRating = PostController::getUserHCAY($userId);
         $userInfo = PostController::getPostUserInfo($userId)[0];
+        $followingUser = PostController::isFollowingUser($userId);
         // echo "<pre>";
         // var_export($userInfo);
         // echo "</pre>";
@@ -61,7 +62,8 @@ class ProfileController extends Controller
                                           ->with('userFollowers', $userFollowers)
                                           ->with('userFollowings', $userFollowings)
                                           ->with('userSocialScore', $userSocialRating[0])
-                                          ->with('userRating', $userSocialRating[1]);
+                                          ->with('userRating', $userSocialRating[1])
+                                          ->with('isFollowing', $followingUser);
     }
 
     /**
