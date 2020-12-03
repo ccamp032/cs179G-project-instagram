@@ -144,7 +144,7 @@ class PostController extends Controller
           $currentArr['id'] = $comment['id'];
           $currentArr['comment'] = $comment['comment'];
           $currentArr['postDate'] = $comment['created_at'];
-          $userName = User::select('name')->where('id', '=', $comment['id'])->get()->toArray();
+          $userName = User::select('name')->where('id', '=', $comment['user_id'])->get()->toArray();
           $currentArr['userName'] = $userName[0]['name'];
 
           array_push($commentsArr, $currentArr);
@@ -363,5 +363,29 @@ class PostController extends Controller
     $post->save();
 
     return response()->json($numberOfViews);
+  }
+
+  public static function addComment(Request $request) {
+    $user = auth()->user()->toArray();
+
+    
+    $postID = $request->post_id;
+    $userID = $user['id'];
+    $userComment = $request->comment;
+
+    //create new comment for table
+    $comment = new Comments;
+    $comment->post_id = $postID;
+    $comment->user_id = $userID;
+    $comment->comment = $userComment;
+
+    $comment->save();
+
+
+    $returnArr = self::getPostComments($postID);
+    
+    
+    return response()->json($returnArr);
+    
   }
 }
