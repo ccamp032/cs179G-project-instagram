@@ -34,7 +34,9 @@
                       {{ $user['name'] }}
                     </td>
                     <td class="text-primary">
+                      <div style="display: inline-block">
                         <a class="nav-link" href="{{ route('profile.getProfile', ['userId' => $user['id'] ]) }}" name ="userId">{{ __('View Profile') }}</a>
+                      </div>
                     </td>
                   </tr>
                   @endforeach
