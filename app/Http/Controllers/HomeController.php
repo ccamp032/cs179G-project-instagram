@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 
 class HomeController extends Controller
 {
@@ -20,10 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //return view('dashboard');
-        $postsArr = DashboardController::loadDashboard();
+        $postsArr = DashboardController::loadDashboard($request);
 
         $myPosts = PostController::getCurrentUserPosts();
         $myFollowers = PostController::getFollowers();
@@ -40,6 +41,7 @@ class HomeController extends Controller
             ->with('myFollowers', $myFollowers)
             ->with('myFollowings', $myFollowings)
             ->with('mySocialScore', $mySocialRating[0])
-            ->with('myRating', $mySocialRating[1]);
+            ->with('myRating', $mySocialRating[1])
+            ->with('filterSelection', $request->filter_method);
     }
 }

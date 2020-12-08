@@ -28,6 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
+Route::post('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
 Route::post('/post/getUserNames/','App\Http\Controllers\PostController@getUserNames')->name('post.getUserNames');
 

@@ -84,6 +84,21 @@
               {{ session('status') }}
           </div>
       @endif
+      <form id="filter_form" action="" method="get">
+        <select id="filter_method" name="filter_method" style="float: right; background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
+              width: 8%; border-left:none; border-right:none;">
+              <option @if($filterSelection == "most_recent" or $filterSelection == NULL) selected @endif value="most_recent">Most Recent</option>
+              <option @if($filterSelection == "most_views") selected @endif value="most_views">Most Views</option>
+              <option @if($filterSelection == "most_likes") selected @endif value="most_likes">Most Likes</option>
+              <option @if($filterSelection == "most_dislikes") selected @endif value="most_dislikes">Most Dislikes</option>
+        </select>
+      </form>
+      <br>
+      <script>
+        $("#filter_method").change(function() { 
+          $("#filter_form").submit()
+        });
+      </script>
       <div class="row">
         @foreach($postsArr as $post)
           <div class="col-md-4">
