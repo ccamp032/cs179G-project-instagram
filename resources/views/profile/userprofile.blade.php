@@ -222,12 +222,14 @@
                   <div style="display:none;" id="post{{ $post['post']['id'] }}commentsBox">
                     @foreach($post['comments'] ?? '' as $comment)
                     <br>
-                    <p style="float:left;">
-                      <bold style="font-weight:bold;">{{ $comment['userName'] }}:</bold> {{ $comment['comment'] }}
-                    </p>
-                    <p style="float:right;">
-                      Date: {{date('m-d-Y', strtotime($comment['postDate']))}}
-                    </p>
+                    <div style="word-wrap: break-word; border-style: dashed; border-color:grey; border-width: 1px; padding: 5px; border-radius: 10px;">
+                      <p style="float:left;">
+                         <div style="word-wrap: break-word;"> <bold style="font-weight:bold;">{{ $comment['userName'] }}: </bold> {{ $comment['comment'] }}</div>
+                      </p>
+                      <p style="float:right; padding-top: 5px">
+                        Date: {{date('m-d-Y', strtotime($comment['postDate']))}}
+                      </p>
+                    </div>
                     <br>
                     @endforeach
                   </div>
@@ -325,13 +327,15 @@
                              date = new Date(item['postDate']);
                              $("#post{{ $post['post']['id'] }}commentsBox").append("\
                              <br>\
+                             <div style='word-wrap: break-word; border-style: dashed; border-color:grey; border-width: 1px; padding: 5px; border-radius: 10px;'>\
                              <p style='float:left;'>\
-                               <bold style='font-weight:bold;'>" + item['userName'] + ": </bold>"+ item['comment'] + "\
+                              <div style='word-wrap: break-word;'> <bold style='font-weight:bold;'>" + item['userName'] + ": </bold>"+ item['comment'] + "</div>\
                              </p>\
-                             <p style='float:right;'>\
-                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() :
-                               ('0' + date.getDate())) + '-' + date.getFullYear() + "\
+                             <p style='float:right; padding-top: 5px'>\
+                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate()+1) > 9) ? (date.getDate()+1) :
+                               ('0' + (date.getDate()+1))) + '-' + date.getFullYear() + "\
                              </p>\
+                             </div>\
                              <br>")
                            });
                          }
