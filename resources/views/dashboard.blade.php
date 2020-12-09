@@ -152,7 +152,7 @@
                       <br>
                       <div class="stats-right stats-section">
                         <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCount">{{ $post['likes'] }}</p>
-                        @if($post['likes'] == 1)
+                        @if($post['likedImage'] == 1)
                         <a style="color:#2196f3;" href="#" id="post{{ $post['post']['id'] }}Like">
                           <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
                         </a>
