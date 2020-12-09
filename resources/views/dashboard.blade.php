@@ -171,7 +171,7 @@
                       </div>
                     </div>
                   </div>
-                  <div style="display:none;" id="post{{ $post['post']['id'] }}commentsBox">
+                  <div style="display:none; overflow: auto; min-height: 0px; max-height:500px; border: solid grey 1px; padding: 5px" id="post{{ $post['post']['id'] }}commentsBox">
                     @foreach($post['comments'] ?? '' as $comment)
                     <br>
                     <div style="word-wrap: break-word; border-style: dashed; border-color:grey; border-width: 1px; padding: 5px; border-radius: 10px;">
@@ -184,7 +184,7 @@
                     </div>
                     <br>
                     @endforeach
-                  </div>
+                  </div><br>
                   <input style="display:none; width:80%;" id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
                   <button style="display:none;" id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
                   <script>
@@ -284,8 +284,8 @@
                               <div style='word-wrap: break-word;'> <bold style='font-weight:bold;'>" + item['userName'] + ": </bold>"+ item['comment'] + "</div>\
                              </p>\
                              <p style='float:right; padding-top: 5px'>\
-                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate()+1) > 9) ? (date.getDate()+1) :
-                               ('0' + (date.getDate()+1))) + '-' + date.getFullYear() + "\
+                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate()) > 9) ? (date.getDate()) :
+                               ('0' + (date.getDate()))) + '-' + date.getFullYear() + "\
                              </p>\
                              </div>\
                              <br>")
