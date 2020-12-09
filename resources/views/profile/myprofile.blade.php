@@ -160,26 +160,34 @@
                       <br>
                       <div class="stats-right stats-section">
                         <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCount">{{ $post['likes'] }}</p>
-                        @if($post['likes'] == 1)
-                        <a style="color:#2196f3;" href="#" id="post{{ $post['post']['id'] }}Like">
-                          <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
-                        </a>
+                        @if($post['likedImage'] == 1)
+                          <a style="color:#2196f3;" href="#" id="post{{ $post['post']['id'] }}Like">
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
+                          </a>
                           <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Dislike">
                             <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i>
                           </a>
-                          @else
+                        @elseif($post['likedImage'] == 0)
                           <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Like">
                             <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
                           </a>
-                            <a style="color:#f44336;" href="#" id="post{{ $post['post']['id'] }}Dislike">
-                              <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i>
-                            </a>
-                          @endif
-                            <p style="display:inline" id="post{{ $post['post']['id'] }}DislikeCount">{{ $post['dislikes'] }}</a>
+                          <a style="color:#f44336;" href="#" id="post{{ $post['post']['id'] }}Dislike">
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i>
+                          </a>
+                        @else
+                          <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Like">
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_up</i>
+                          </a>
+                          <a style="color:#6c757d;" href="#" id="post{{ $post['post']['id'] }}Dislike">
+                            <i style="vertical-align: text-bottom;" class="material-icons">thumb_down</i>
+                          </a>
+                        @endif
+                        <p style="display:inline" id="post{{ $post['post']['id'] }}DislikeCount">{{ $post['dislikes'] }}</a>
                       </div>
                     </div>
                   </div>
-                  <div style="display:none;" id="post{{ $post['post']['id'] }}commentsBox">
+                  <div class="container" id="post{{ $post['post']['id'] }}spacer" style="display: none; padding-top: 10px"></div>
+                  <div style="display:none; overflow: auto; min-height: 0px; max-height:420px; border: solid grey 1px; padding: 5px;" id="post{{ $post['post']['id'] }}commentsBox">
                     @foreach($post['comments'] ?? '' as $comment)
                     <br>
                     <div style="word-wrap: break-word; border-style: dashed; border-color:grey; border-width: 1px; padding: 5px; border-radius: 10px;">
@@ -192,19 +200,37 @@
                     </div>
                     <br>
                     @endforeach
-                    </div>
+                    </div><br>
                     <input style="display:none; width:80%;" id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
                     <button style="display:none;" id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
+                    <div class="row" id="post{{ $post['post']['id'] }}editPostContainer" style="display: none; width: 100%; padding-top: 10px">
+                      <div class="container" style="width: 50%;">
+                        <div style="float: right">
+                          <button style="background-color: #f44336; display:none;" id="post{{ $post['post']['id'] }}deleteComment" type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
+                        </div>
+                        <div style="float: right; padding-right: 15px">
+                          <button style="background-color: #2196f3; display:none;" id="post{{ $post['post']['id'] }}editComment" type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
+                        </div>
+                      </div>
+                    </div>
                   <script>
                     $("#post{{ $post['post']['id'] }}commentsToggle").click(function(){
                       if ($("#post{{ $post['post']['id'] }}commentsBox").is(':visible')) {
                         $("#post{{ $post['post']['id'] }}commentsBox").slideUp();
                         $("#post{{ $post['post']['id'] }}newComment").slideUp();
                         $("#post{{ $post['post']['id'] }}submitComment").slideUp();
+                        $("#post{{ $post['post']['id'] }}editComment").slideUp();
+                        $("#post{{ $post['post']['id'] }}deleteComment").slideUp();
+                        $("#post{{ $post['post']['id'] }}editPostContainer").slideUp();
+                        $("#post{{ $post['post']['id'] }}spacer").slideUp();
                       } else {
                         $("#post{{ $post['post']['id'] }}commentsBox").slideDown();
                         $("#post{{ $post['post']['id'] }}newComment").slideDown();
                         $("#post{{ $post['post']['id'] }}submitComment").slideDown();
+                        $("#post{{ $post['post']['id'] }}editComment").slideDown();
+                        $("#post{{ $post['post']['id'] }}deleteComment").slideDown();
+                        $("#post{{ $post['post']['id'] }}editPostContainer").slideDown();
+                        $("#post{{ $post['post']['id'] }}spacer").slideDown();
                       }
                     });
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -292,8 +318,8 @@
                               <div style='word-wrap: break-word;'> <bold style='font-weight:bold;'>" + item['userName'] + ": </bold>"+ item['comment'] + "</div>\
                              </p>\
                              <p style='float:right; padding-top: 5px'>\
-                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate()+1) > 9) ? (date.getDate()+1) :
-                               ('0' + (date.getDate()+1))) + '-' + date.getFullYear() + "\
+                               Date: " + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate()) > 9) ? (date.getDate()) :
+                               ('0' + (date.getDate()))) + '-' + date.getFullYear() + "\
                              </p>\
                              </div>\
                              <br>")
