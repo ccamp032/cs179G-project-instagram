@@ -18,7 +18,6 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('description');
             $table->unsignedBigInteger('views');
-            $table->string('img_url');
             $table->timestamps();
         });
     }

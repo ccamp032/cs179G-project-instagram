@@ -19,7 +19,6 @@ class PostsSeeder extends Seeder
             'user_id' => 1,
             'description' => 'Cute Pandas Sleeping',
             'views' => 3,
-            'img_url' => 'https://media.npr.org/assets/img/2011/09/27/506128252_8907911_wide-1c1f2822dfbc2e71c640269a8b842ecc916ba7be.jpg?s=1400',
             'created_at' => now(),
             'updated_at' => now()
         ]);

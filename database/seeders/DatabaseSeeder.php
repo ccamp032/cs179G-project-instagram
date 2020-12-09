@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([UserTagsTableSeeder::class]);
         $this->call([PostsSeeder::class]);
         $this->call([LikesDislikesSeeder::class]);
+        $this->call([ImgUrlSeeder::class]);
 
     }
 }

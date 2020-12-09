@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 use App\Posts;
+use App\ImgUrl;
 use App\Comments;
 use App\Followers;
 use App\Following;
@@ -59,12 +60,18 @@ class PostController extends Controller
         // Upload image
         $this->uploadOne($image, $folder, 'public', $name);
 
-        $newPost->img_url = $filePath;
         $newPost->user_id = $user['id'];
         $newPost->description = $request->input('description');
         $newPost->views = 0;
 
         $newPost->save();
+
+        $newImgUrl = new ImgUrl;
+
+        $newImgUrl->id = $newPost['id'];
+        $newImgUrl->url = $filePath;
+
+        $newImgUrl->save();
 
         $newUserTags = new UserTags;
 
@@ -73,6 +80,7 @@ class PostController extends Controller
         $newUserTags->user_name = $user['name'];
 
         $newUserTags->save();
+
         return redirect()->route('home')->with(['status' => 'Post created successfully.']);
       } else {
         return redirect()->back()->with(['status' => 'Error with image. Please try again.']);
@@ -119,6 +127,10 @@ class PostController extends Controller
 
         //check if user liked this post or not
         $likedImage = self::likedImage($currentPost['id'], $user['id']);
+
+        $img_url = ImgUrl::where('id', $currentPost['id'])->get()->first()->toArray();
+
+        $currentPost['img_url'] = $img_url['url'];
 
         $currentPostArr = [
           'post'        => $currentPost,
@@ -368,7 +380,7 @@ class PostController extends Controller
   public static function addComment(Request $request) {
     $user = auth()->user()->toArray();
 
-    
+
     $postID = $request->post_id;
     $userID = $user['id'];
     $userComment = $request->comment;
@@ -383,9 +395,9 @@ class PostController extends Controller
 
 
     $returnArr = self::getPostComments($postID);
-    
-    
+
+
     return response()->json($returnArr);
-    
+
   }
 }
