@@ -187,7 +187,7 @@
                     </div>
                   </div>
                   <div class="container" id="post{{ $post['post']['id'] }}spacer" style="display: none; padding-top: 10px"></div>
-                  <div style="display:none; overflow: auto; min-height: 0px; max-height:420px; border: solid grey 1px; padding: 5px;" id="post{{ $post['post']['id'] }}commentsBox">
+                  <div style="display:none; overflow: auto; min-height: 0px; max-height:420px; padding: 5px;" id="post{{ $post['post']['id'] }}commentsBox">
                     @foreach($post['comments'] ?? '' as $comment)
                     <br>
                     <div style="word-wrap: break-word; border-style: dashed; border-color:grey; border-width: 1px; padding: 5px; border-radius: 10px;">

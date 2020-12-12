@@ -226,7 +226,7 @@
                       </div>
                     </div>
                   </div>
-                  <div style="display:none; overflow: auto; min-height: 0px; max-height:500px; border: solid grey 1px; padding: 5px" id="post{{ $post['post']['id'] }}commentsBox">
+                  <div style="display:none; overflow: auto; min-height: 0px; max-height:500px; padding: 5px" id="post{{ $post['post']['id'] }}commentsBox">
                     @foreach($post['comments'] ?? '' as $comment)
                     <br>
                     <div style="word-wrap: break-word; border-style: dashed; border-color:grey; border-width: 1px; padding: 5px; border-radius: 10px;">
