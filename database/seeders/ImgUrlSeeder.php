@@ -15,6 +15,6 @@ class ImgUrlSeeder extends Seeder
      */
     public function run()
     {
-      factory(ImgUrl::class, 300)->create();
+      factory(ImgUrl::class, 301)->create();
     }
 }
