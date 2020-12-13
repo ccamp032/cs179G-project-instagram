@@ -90,22 +90,27 @@
         $('#search_method_2').change(function() {
           if($(this).val() == "follower_count") {
             $('#search_method_3').css('display', '');
+            $('#post_date').css('display', 'none');
             $('#search').css('display', '');
           }
           else if($(this).val() == "like_count") {
             $('#search_method_3').css('display', '');
+            $('#post_date').css('display', 'none');
             $('#search').css('display', '');
           }
           else if($(this).val() == "post_count") {
             $('#search_method_3').css('display', '');
+            $('#post_date').css('display', 'none');
             $('#search').css('display', '');
           }
           else if($(this).val() == "post_views") {
             $('#search_method_3').css('display', '');
+            $('#post_date').css('display', 'none');
             $('#search').css('display', '');
           }
           else if($(this).val() == "comments_count") {
             $('#search_method_3').css('display', '');
+            $('#post_date').css('display', 'none');
             $('#search').css('display', '');
           }
           else if($(this).val() == "post_date") {
