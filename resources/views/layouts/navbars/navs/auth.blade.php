@@ -36,6 +36,14 @@
                   <option value="misc_tags">Misc Tags</option>
               </select>
             </div>
+            <div>
+              <select id="search_method_3" name="search_method_3" style="visibility: hidden; margin-left: 30px; background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
+                width: 50%; border-left:none; border-right:none;">
+                  <option value="less_than"><</option>
+                  <option value="equal_to">=</option>
+                  <option value="greater-than">></option>
+              </select>
+            </div>
             <script>
               $('#search_method_1').change(function() {
                 if($(this).val() == "users") {
@@ -45,6 +53,7 @@
                              <option value="user_tags">User Tags</option> \
                              <option value="misc_tags">Misc Tags</option>';
                              $('#search_method_2').css('margin-right', '0px');
+                             $('#search_method_3').css('visibility', 'hidden');
                 }
                 else if($(this).val() == "posts") {
                   options = '<option value="description">Description</option> \
@@ -54,8 +63,30 @@
                              <option value="post_views">Views</option> \
                              <option value="post_date">Date</option>';
                   $('#search_method_2').css('margin-right', '37px');
+                  $('#search_method_3').css('visibility', 'hidden');
                 }
                 $('#search_method_2').html(options);
+              });
+
+              $('#search_method_2').change(function() {
+                if($(this).val() == "follower_count") {
+                  $('#search_method_3').css('visibility', 'visible');
+                }
+                else if($(this).val() == "like_count") {
+                  $('#search_method_3').css('visibility', 'visible');
+                }
+                else if($(this).val() == "post_count") {
+                  $('#search_method_3').css('visibility', 'visible');
+                }
+                else if($(this).val() == "post_views") {
+                  $('#search_method_3').css('visibility', 'visible');
+                }
+                else if($(this).val() == "comments_count") {
+                  $('#search_method_3').css('visibility', 'visible');
+                }
+                else {
+                  $('#search_method_3').css('visibility', 'hidden');
+                }
               });
             </script>
         </div>
