@@ -32,6 +32,8 @@
                   <option value="name">Name</option>
                   <option value="post_description">Post Description</option>
                   <option value="follower_count">Follower Count</option>
+                  <option value="like_count">Like Count</option>
+                  <option value="post_count">Post Count</option>
                   <option value="user_tags">User Tags</option>
                   <option value="misc_tags">Misc Tags</option>
               </select>
@@ -59,6 +61,8 @@
             options = '<option value="name">Name</option> \
                        <option value="post_description">Post Description</option> \
                        <option value="follower_count">Follower Count</option> \
+                       <option value="like_count">Like Count</option> \
+                       <option value="post_count">Post Count</option> \
                        <option value="user_tags">User Tags</option> \
                        <option value="misc_tags">Misc Tags</option>';
                        $('#search_method_2').css('margin-right', '0px');
@@ -72,7 +76,9 @@
                        <option value="user_tags">User Tags</option> \
                        <option value="misc_tags">Misc Tags</option> \
                        <option value="post_views">Views</option> \
-                       <option value="post_date">Date</option>';
+                       <option value="post_date">Date</option> \
+                       <option value="like_count">Like Count</options> \ 
+                       <option value="comments_count">Comments Count</options>';
             $('#search_method_2').css('margin-right', '37px');
             $('#search_method_3').css('display', 'none');
             $('#post_date').css('display', 'none');
