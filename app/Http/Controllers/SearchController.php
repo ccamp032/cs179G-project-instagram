@@ -120,7 +120,7 @@ class SearchController extends Controller
             array_push($returnArr, $post);
           }
         }
-        dd($returnArr);
+        
         return $returnArr;
 
     }
