@@ -49,11 +49,16 @@ class SearchController extends Controller
             $result = self::getPostsByDescription($searchString);
             $posts = PostController::buildPosts($result);
           }
-          //User_tags
+          //User_tags 
           else if ($search_method_2 == "user_tags"){
             $result = self::getPostsByUserTags($searchString);
             $posts = PostController::buildPosts($result);
           }
+          //Posts_by_date
+          else if ($search_method_2 == "post_date"){
+            $posts = self::getPostsByDate($searchString);
+          }
+
         }
     
         return view('search.search')->with('searchUser', $users)
@@ -163,6 +168,14 @@ class SearchController extends Controller
       }
 
       return $returnArr;
+    }
+
+    public static function getPostsByDate($searchString)
+    {
+
+      $postsDates = Posts::whereDate('created_at', date($searchString))->orderBy('created_at', 'desc')->get()->toArray();
+      
+      dd($postsDates);
     }
 
 }
