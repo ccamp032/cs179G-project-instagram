@@ -44,7 +44,7 @@
                   options = '<option value="description">Description</option> \
                              <option value="user_name">User Name</option> \
                              <option value="user_tags">User Tags</option> \
-                             <option value="views">Views</option>';
+                             <option value="post_views">Views</option>';
                   $('#search_method_2').css('margin-right', '37px');
                 }
                 $('#search_method_2').html(options);

@@ -13,38 +13,45 @@ class SearchController extends Controller
     public static function search(Request $request)
     {
         $searchString = $request->search;
-        $search_method = $request->search_method;
+        $search_method_1 = $request->search_method_1;
+        $search_method_2 = $request->search_method_2;
 
         $users = [];
         $posts = [];
 
         //Users_name
-        if ($search_method == "users") {
-          $users = self::getUsersByName($searchString);
-        }
-        //User_by post_description
-        else if ($search_method == "description_user") {
-          $users = self::getUsersByPostDescription($searchString);
-        }
-        //Post_by_user
-        else if ($search_method == "user_post") {
-          $posts = self::getPostsByUser($searchString);
-        }
-        //Posts_by_views 
-        else if ($search_method == "post_views") {
-          $posts = self::getPostsByViews($searchString);
-        }
-        //Posts_description
-        else if ($search_method == "description") {
-          $result = self::getPostsByDescription($searchString);
-          $posts = PostController::buildPosts($result);
-        }
-        //User_tags
-        else {
-          $result = self::getPostsByUserTags($searchString);
-          $posts = PostController::buildPosts($result);
-        }
+        if ($search_method_1 == "users") {
 
+          if($search_method_2 == "name") {
+            $users = self::getUsersByName($searchString);
+          }
+          //User_by post_description
+          else if ($search_method_2 == "post_description") {
+            $users = self::getUsersByPostDescription($searchString);
+          }
+
+        }
+        else if ($search_method_1 == "posts") {
+          //Post_by_user
+          if ($search_method_2 == "user_name") {
+            $posts = self::getPostsByUser($searchString);
+          }
+          //Posts_by_views 
+          else if ($search_method_2 == "post_views") {
+            $posts = self::getPostsByViews($searchString);
+          }
+          //Posts_description
+          else if ($search_method_2 == "description") {
+            $result = self::getPostsByDescription($searchString);
+            $posts = PostController::buildPosts($result);
+          }
+          //User_tags
+          else if ($search_method_2 == "user_tags"){
+            $result = self::getPostsByUserTags($searchString);
+            $posts = PostController::buildPosts($result);
+          }
+        }
+    
         return view('search.search')->with('searchUser', $users)
                                     ->with('searchPosts', $posts);
     }
