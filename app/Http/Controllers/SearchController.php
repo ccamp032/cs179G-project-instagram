@@ -105,34 +105,17 @@ class SearchController extends Controller
     public static function getPostsByUser($searchString)
     {
 
-      $users = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
+      $userlist = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
 
-      //dd($users);
       $returnArr = [];
-      $count = 0;
 
-      /*
-      foreach ($tags as $tag) {
-          $posts = Posts::where('id', '=', $tag['post_id'])->orderBy('created_at', 'desc')->get()->toArray();
-          foreach ($posts as $post) {
-            array_push($returnArr, $post);
-          }
-        }
-        return $returnArr;
-      */
-
-
-      foreach($users as $user) {
-        // $posts = Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray();
-        //$posts = PostController::getUserPosts($user['id']);
-        $posts = Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray();
+      foreach($userlist as $user) {
+        $posts = PostController::getUserPosts($user['id']);
+        
         foreach ($posts as $post) {
           array_push($returnArr, $post);
         }
-        $count += 1;
       }
-      # dd($count);
-      dd($posts);
 
       return $returnArr;
 
