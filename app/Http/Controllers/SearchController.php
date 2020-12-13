@@ -81,43 +81,43 @@ class SearchController extends Controller
         return $returnArr;
     }
 
-
+    
     public static function getPostUserInfo($userId) {
-      $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
-      return $userInfo;
-  }
+        $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
+        return $userInfo;
+    }
 
     public static function getUsersByPostDescription($searchString)
     {
-      $postDescriptions = Posts::where('description', 'like', '%' . $searchString . '%')->orderBy('user_id', 'asc')->get()->toArray();
+        $postDescriptions = Posts::where('description', 'like', '%' . $searchString . '%')->orderBy('user_id', 'asc')->get()->toArray();
 
-      $returnArr = [];
+        $returnArr = [];
 
-      foreach($postDescriptions as $postDescription) {
-        $userInfo = self::getPostUserInfo($postDescription['user_id']);
-        array_push($returnArr, $userInfo);
-      }
+        foreach($postDescriptions as $postDescription) {
+          $userInfo = self::getPostUserInfo($postDescription['user_id']);
+          array_push($returnArr, $userInfo);
+        }
 
-      return $returnArr;
+        return $returnArr;
     }
 
 
     public static function getPostsByUser($searchString)
     {
 
-      $userlist = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
+        $userlist = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
 
-      $returnArr = [];
+        $returnArr = [];
 
-      foreach($userlist as $user) {
-        $posts = PostController::getUserPosts($user['id']);
+        foreach($userlist as $user) {
+          $posts = PostController::getUserPosts($user['id']);
         
-        foreach ($posts as $post) {
-          array_push($returnArr, $post);
+          foreach ($posts as $post) {
+            array_push($returnArr, $post);
+          }
         }
-      }
 
-      return $returnArr;
+        return $returnArr;
 
     }
 
