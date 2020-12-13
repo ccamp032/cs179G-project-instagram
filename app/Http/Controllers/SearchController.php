@@ -30,6 +30,10 @@ class SearchController extends Controller
         else if ($search_method == "user_post") {
           $posts = self::getPostsByUser($searchString);
         }
+        //Posts_by_views 
+        else if ($search_method == "post_views") {
+          $posts = self::getPostsByViews($searchString);
+        }
         //Posts_description
         else if ($search_method == "description") {
           $result = self::getPostsByDescription($searchString);
@@ -81,44 +85,52 @@ class SearchController extends Controller
         return $returnArr;
     }
 
-
+    
     public static function getPostUserInfo($userId) {
-      $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
-      return $userInfo;
-  }
+        $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
+        return $userInfo;
+    }
 
     public static function getUsersByPostDescription($searchString)
     {
-      $postDescriptions = Posts::where('description', 'like', '%' . $searchString . '%')->orderBy('user_id', 'asc')->get()->toArray();
+        $postDescriptions = Posts::where('description', 'like', '%' . $searchString . '%')->orderBy('user_id', 'asc')->get()->toArray();
 
-      $returnArr = [];
+        $returnArr = [];
 
-      foreach($postDescriptions as $postDescription) {
-        $userInfo = self::getPostUserInfo($postDescription['user_id']);
-        array_push($returnArr, $userInfo);
-      }
+        foreach($postDescriptions as $postDescription) {
+          $userInfo = self::getPostUserInfo($postDescription['user_id']);
+          array_push($returnArr, $userInfo);
+        }
 
-      return $returnArr;
+        return $returnArr;
     }
 
 
     public static function getPostsByUser($searchString)
     {
 
-      $userlist = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
+        $userlist = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
 
-      $returnArr = [];
+        $returnArr = [];
 
-      foreach($userlist as $user) {
-        $posts = PostController::getUserPosts($user['id']);
+        foreach($userlist as $user) {
+          $posts = PostController::getUserPosts($user['id']);
         
-        foreach ($posts as $post) {
-          array_push($returnArr, $post);
+          foreach ($posts as $post) {
+            array_push($returnArr, $post);
+          }
         }
-      }
+        
+        return $returnArr;
 
-      return $returnArr;
+    }
 
+    public static function getPostsByViews($searchString)
+    {
+        //$userInfo = User::where('id', '=', $userId)->get()->toArray();
+        $postsViews = Posts::where('views', '=', $searchString)->orderBy('views', 'desc')->get()->toArray();
+
+        return PostController::buildPosts($postsViews);
     }
 
 }
