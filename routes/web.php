@@ -84,6 +84,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('myprofile/edit', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::get('myprofile', ['as' => 'profile.myprofile', 'uses' => 'App\Http\Controllers\ProfileController@myProfile']);
 	Route::put('myprofile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+	Route::get('myprofile/followers', ['as' => 'profile.followers', 'uses' => 'App\Http\Controllers\ProfileController@myFollowers']);
+	Route::get('myprofile/following', ['as' => 'profile.following', 'uses' => 'App\Http\Controllers\ProfileController@myFollowing']);
 	Route::put('myprofile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::any('profile/{userId}', ['as' => 'profile.getProfile', 'uses' => 'App\Http\Controllers\ProfileController@getProfile']);
 	Route::get('popular/users', ['as' => 'popular.users', 'uses' => 'App\Http\Controllers\PopularController@popularUsers']);

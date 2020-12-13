@@ -30,10 +30,12 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">supervisor_account</i>
-              </div>
-              <p class="card-category">Followers</p>
+              <a href="{{ route('profile.followers') }}" name ="myFollowers">
+                <div class="card-icon" style="color: white">
+                  <i class="material-icons">supervisor_account</i>
+                </div>
+              </a>
+              <p class="card-category" style="padding-top: 10px;">Followers</p>
               <h3 class="card-title">{{count($myFollowers)}}</h3>
             </div>
             <div class="card-footer">
@@ -46,10 +48,12 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-icon">
-              <div class="card-icon" style="background-color: rgb(204, 0, 255)">
-                <i class="material-icons">redo</i>
-              </div>
-              <p class="card-category">Following</p>
+              <a href="{{ route('profile.following') }}" name ="myFollowing">
+                <div class="card-icon" style="background-color: rgb(204, 0, 255); color: white">
+                  <i class="material-icons">redo</i>
+                </div>
+              </a>
+              <p class="card-category" style="padding-top: 10px;">Following</p>
               <h3 class="card-title">{{count($myFollowings)}}</h3>
             </div>
             <div class="card-footer">

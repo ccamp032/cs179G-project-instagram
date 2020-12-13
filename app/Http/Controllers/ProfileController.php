@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Followers;
 use App\Following;
 use App\Http\Requests\ProfileRequest;
@@ -45,6 +46,30 @@ class ProfileController extends Controller
                                         ->with('myRating', $mySocialRating[1]);
     }
 
+    public static function myFollowers() {
+        $currentUser = auth()->user()->toArray();
+        $followers = [];
+        $myFollowers = PostController::getUserFollowers($currentUser['id']);
+        foreach ($myFollowers as $follower) {
+            $followerInfo = User::where('id', '=', $follower['follower_user_id'])->get()->first()->toArray();
+            array_push($followers, $followerInfo);
+        }
+        
+        return view('profile.myfollowers')->with('myFollowers', $followers);
+    }
+
+    public static function myFollowing() {
+        $currentUser = auth()->user()->toArray();
+        $followings = [];
+        $myFollowing = PostController::getUserFollowings($currentUser['id']);
+        foreach ($myFollowing as $following) {
+            $followingInfo = User::where('id', '=', $following['follower_user_id'])->get()->first()->toArray();
+            array_push($followings, $followingInfo);
+        }
+
+        return view('profile.myfollowing')->with('myFollowing', $followings);
+    }
+    
     public static function getProfile($userId)
     {
         $userPosts = PostController::getUserPosts($userId);
