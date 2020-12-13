@@ -99,7 +99,7 @@
       </form>
       <br>
       <script>
-        $("#filter_method").change(function() { 
+        $("#filter_method").change(function() {
           $("#filter_form").submit()
         });
       </script>
@@ -144,6 +144,10 @@
                   <div style="width:70%; text-align:center; margin:auto;">
                     <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
                   </div>
+                  <br>
+                  <a href='{{ url($post['post']['img_url']) }}' download='InstagramImage' class="button">
+                    <i style="float:right; margin-bottom:20px; cursor:pointer;" class="material-icons">cloud_download</i>
+                  </a>
                   <br>
                   <div style="width:100%; display:flex;">
                     <div class="stats" style="width: 100%; display:flex;">

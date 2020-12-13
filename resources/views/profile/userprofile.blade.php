@@ -193,6 +193,10 @@
                     <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
                   </div>
                   <br>
+                  <a href='{{ url($post['post']['img_url']) }}' download='InstagramImage.jpg' class="button">
+                    <i style="float:right; margin-bottom:20px; cursor:pointer;" class="material-icons">cloud_download</i>
+                  </a>
+                  <br>
                   <div style="width:100%; display:flex;">
                     <div class="stats" style="width: 100%; display:flex;">
                       <div class="post{{ $post['post']['id'] }}Views stats-left stats-section">
