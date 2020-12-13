@@ -19,6 +19,7 @@ class PostsSeeder extends Seeder
             'user_id' => 1,
             'description' => 'Cute Pandas Sleeping',
             'views' => 3,
+            'misc_tags' => 'test,cars,cute',
             'created_at' => now(),
             'updated_at' => now()
         ]);

@@ -31,8 +31,9 @@
                 width: 100%; border-left:none; border-right:none;">
                   <option value="name">Name</option>
                   <option value="post_description">Post Description</option>
-                  <option value="follower_count">Followers</option>
-                  <option value="post_tags">Post Tags</option>                
+                  <option value="follower_count">Follower Count</option>
+                  <option value="user_tags">User Tags</option>
+                  <option value="misc_tags">Misc Tags</option>
               </select>
             </div>
             <script>
@@ -40,15 +41,18 @@
                 if($(this).val() == "users") {
                   options = '<option value="name">Name</option> \
                              <option value="post_description">Post Description</option> \
-                             <option value="follower_count">Followers</option> \
-                             <option value="post_tags">Post Tags</option>';
+                             <option value="follower_count">Follower Count</option> \
+                             <option value="user_tags">User Tags</option> \
+                             <option value="misc_tags">Misc Tags</option>';
                              $('#search_method_2').css('margin-right', '0px');
                 }
                 else if($(this).val() == "posts") {
                   options = '<option value="description">Description</option> \
                              <option value="user_name">User Name</option> \
                              <option value="user_tags">User Tags</option> \
-                             <option value="post_views">Views</option> \ <option value="post_date">Date</option>';
+                             <option value="misc_tags">Misc Tags</option> \
+                             <option value="post_views">Views</option> \
+                             <option value="post_date">Date</option>';
                   $('#search_method_2').css('margin-right', '37px');
                 }
                 $('#search_method_2').html(options);

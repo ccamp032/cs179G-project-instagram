@@ -63,6 +63,7 @@ class PostController extends Controller
         $newPost->user_id = $user['id'];
         $newPost->description = $request->input('description');
         $newPost->views = 0;
+        $newPost->misc_tags = str_replace(' ', '', $request->misc_tags_name);
 
         $newPost->save();
 
@@ -73,13 +74,23 @@ class PostController extends Controller
 
         $newImgUrl->save();
 
-        $newUserTags = new UserTags;
+        $user_tags = $request->user_tags_name;
+        $user_tag_list = explode(",", $user_tags);
 
-        $newUserTags->post_id = $newPost->id;
-        $newUserTags->user_id = $user['id'];
-        $newUserTags->user_name = $user['name'];
+        foreach($user_tag_list as $currentTag) {
+          $currentTag = trim($currentTag);
+          if ($currentTag != "") {
+            $currentUserId = User::select('id')->where('name', 'like', '%' . $currentTag . '%')->get()->first()->toArray();
 
-        $newUserTags->save();
+            $newUserTags = new UserTags;
+
+            $newUserTags->post_id = $newPost->id;
+            $newUserTags->user_id = $currentUserId['id'];
+            $newUserTags->user_name = $currentTag;
+
+            $newUserTags->save();
+          }
+        }
 
         return redirect()->route('home')->with(['status' => 'Post created successfully.']);
       } else {

@@ -33,6 +33,14 @@ class SearchController extends Controller
           else if ($search_method_2 == "post_description") {
             $users = self::getUsersByPostDescription($searchString);
           }
+          //User_by user_tags
+          else if ($search_method_2 == "user_tags") {
+            $users = self::getUsersByUserTags($searchString);
+          }
+          //User_by misc_tags
+          else if ($search_method_2 == "misc_tags") {
+            $users = self::getUsersByMiscTags($searchString);
+          }
 
         }
         else if ($search_method_1 == "posts") {
@@ -40,7 +48,7 @@ class SearchController extends Controller
           if ($search_method_2 == "user_name") {
             $posts = self::getPostsByUser($searchString);
           }
-          //Posts_by_views 
+          //Posts_by_views
           else if ($search_method_2 == "post_views") {
             $posts = self::getPostsByViews($searchString);
           }
@@ -49,9 +57,14 @@ class SearchController extends Controller
             $result = self::getPostsByDescription($searchString);
             $posts = PostController::buildPosts($result);
           }
-          //User_tags 
+          //User_tags
           else if ($search_method_2 == "user_tags"){
             $result = self::getPostsByUserTags($searchString);
+            $posts = PostController::buildPosts($result);
+          }
+          //Misc_tags
+          else if ($search_method_2 == "misc_tags"){
+            $result = self::getPostsByMiscTags($searchString);
             $posts = PostController::buildPosts($result);
           }
           //Posts_by_date
@@ -60,7 +73,7 @@ class SearchController extends Controller
           }
 
         }
-    
+
         return view('search.search')->with('searchUser', $users)
                                     ->with('searchPosts', $posts);
     }
@@ -73,7 +86,7 @@ class SearchController extends Controller
         return $userList;
     }
 
-    private static function removeElementWithValue($array, $key, $value) {  
+    private static function removeElementWithValue($array, $key, $value) {
         foreach($array as $subKey => $subArray){
              if($subArray[$key] == $value){
                   unset($array[$subKey]);
@@ -101,7 +114,49 @@ class SearchController extends Controller
         return $returnArr;
     }
 
-    
+    public static function getPostsByMiscTags($searchString)
+    {
+        $posts = Posts::where('misc_tags', 'like', '%' . $searchString . '%')->orderBy('created_at', 'desc')->get()->toArray();
+
+        $returnArr = [];
+        foreach ($posts as $post) {
+          array_push($returnArr, $post);
+        }
+        return $returnArr;
+    }
+
+    public static function getUsersByUserTags($searchString)
+    {
+        $tags = UserTags::where('user_name', 'like', '%' . $searchString . '%')->orderBy('created_at', 'desc')->get()->toArray();
+
+        $returnArr = [];
+        foreach ($tags as $tag) {
+          $posts = Posts::where('id', '=', $tag['post_id'])->orderBy('created_at', 'desc')->get()->toArray();
+          foreach ($posts as $post) {
+            $userInfo = self::getPostUserInfo($post['user_id']);
+            if(!in_array($userInfo, $returnArr, true)){
+                array_push($returnArr, $userInfo);
+            }
+          }
+        }
+        return $returnArr;
+    }
+
+    public static function getUsersByMiscTags($searchString)
+    {
+        $posts = Posts::where('misc_tags', 'like', '%' . $searchString . '%')->orderBy('created_at', 'desc')->get()->toArray();
+
+        $returnArr = [];
+        foreach ($posts as $post) {
+          $userInfo = self::getPostUserInfo($post['user_id']);
+          if(!in_array($userInfo, $returnArr, true)){
+              array_push($returnArr, $userInfo);
+          }
+        }
+        return $returnArr;
+    }
+
+
     public static function getPostUserInfo($userId) {
         $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
         return $userInfo;
@@ -131,12 +186,12 @@ class SearchController extends Controller
 
         foreach($userlist as $user) {
           $posts = PostController::getUserPosts($user['id']);
-        
+
           foreach ($posts as $post) {
             array_push($returnArr, $post);
           }
         }
-        
+
         return $returnArr;
 
     }
@@ -151,7 +206,7 @@ class SearchController extends Controller
 
     public static function getUserbyFollowers($searchString)
     {
-        
+
       $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
       ->groupBy('user_id')
       ->orderby('count', 'desc')
@@ -174,7 +229,7 @@ class SearchController extends Controller
     {
 
       $postsDates = Posts::whereDate('created_at', date($searchString))->orderBy('created_at', 'desc')->get()->toArray();
-      
+
       dd($postsDates);
     }
 

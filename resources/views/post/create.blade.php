@@ -35,7 +35,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Image') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('image') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" id="input-image" type="file" required />
+                      <input style="width:85%;" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" id="input-image" type="file" required />
                       @if ($errors->has('image'))
                         <span id="image-error" class="error text-danger" for="input-image">{{ $errors->first('image') }}</span>
                       @endif
@@ -46,7 +46,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Description') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" id="input-description" type="text" placeholder="{{ __('Description') }}" value="" required="true" aria-required="true"/>
+                      <input style="width:85%;" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" id="input-description" type="text" placeholder="{{ __('Description') }}" value="" required="true" aria-required="true"/>
                       @if ($errors->has('description'))
                         <span id="description-error" class="error text-danger" for="input-name">{{ $errors->first('description') }}</span>
                       @endif
@@ -54,34 +54,64 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('Tags') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('MiscTags') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('tags') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="user_tags_name" id="input-tags" type="text" placeholder="{{ __('Tags') }}" value="" />
-                      @if ($errors->has('tags'))
-                        <span id="tags-error" class="error text-danger" for="input-tags">{{ $errors->first('tags') }}</span>
+                    <div class="form-group{{ $errors->has('misc_tags') ? ' has-danger' : '' }}">
+                      <input style="width:85%" class="" name="misc_tags_name" id="misc_input-tags" type="text" placeholder="{{ __('Misc Tags') }}" value="" />
+                      @if ($errors->has('misc_tags'))
+                        <span id="misc_tags-error" class="error text-danger" for="misc_input-tags">{{ $errors->first('tags') }}</span>
                       @endif
-                      <input type="hidden" id="user_tags_id" name="user_tags_id" value="" />
+                      <input type="hidden" id="misc_tags_id" name="misc_tags_id" value="" />
+                      <button style="margin:0px; padding:0px; top:-11px;" type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm" data-original-title="Comma Separated">
+                        <i class="material-icons">help</i>
+                      <div class="ripple-container"></div></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('User_Tags') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('user_tags') ? ' has-danger' : '' }}">
+                      <input style="width:85%;" class="" name="user_tags_name" id="user_input-tags" type="text" placeholder="{{ __('User Tags') }}" value="" />
+                      @if ($errors->has('user_tags'))
+                        <span id="user_tags-error" class="error text-danger" for="user_input-tags">{{ $errors->first('user_tags') }}</span>
+                      @endif
                     </div>
                   </div>
                 </div>
                 <script>
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                    $(document).ready(function(){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-                      $( "#input-tags" ).autocomplete({
+                $( function() {
+                    function split( val ) {
+                      return val.split( /,\s*/ );
+                    }
+                    function extractLast( term ) {
+                      return split( term ).pop();
+                    }
+
+                    $( "#user_input-tags" )
+                      // don't navigate away from the field on tab when selecting an item
+                      .on( "keydown", function( event ) {
+                        if ( event.keyCode === $.ui.keyCode.TAB &&
+                            $( this ).autocomplete( "instance" ).menu.active ) {
+                          event.preventDefault();
+                        }
+                      })
+                      .autocomplete({
+                        minLength: 0,
                         source: function( request, response ) {
-                          // Fetch data
+                          // delegate back to autocomplete, but extract the last term
                           $.ajax({
                             url:"{{route('post.getUserNames')}}",
                             type: 'post',
                             dataType: "json",
                             data: {
                                _token: CSRF_TOKEN,
-                               search: request.term
+                               search: extractLast( request.term )
                             },
                             success: function( data ) {
-                               currentInput = $( "#input-tags" ).val();
+                               currentInput = $( "#user_input-tags" ).val();
                                if (currentInput == "") {
                                  $("#submit_post").attr("disabled", false);
                                } else {
@@ -91,17 +121,26 @@
                             }
                           });
                         },
-                        select: function (event, ui) {
-                           // Set selection
-                           $("#input-tags").val(ui.item.label);
-                           $("#user_tags_id").val(ui.item.value);
-                           $("#submit_post").attr("disabled", false);
-                           return false;
+                        focus: function() {
+                          // prevent value inserted on focus
+                          return false;
+                        },
+                        select: function( event, ui ) {
+                          console.log(this.value)
+                          var names = split( this.value );
+                          // remove the current input
+                          names.pop();
+                          // add the selected item
+                          names.push( ui.item.label );
+                          // add placeholder to get the comma-and-space at the end
+                          names.push( "" );
+                          this.value = names.join( ", " );
+
+                          $("#submit_post").attr("disabled", false);
+                          return false;
                         }
                       });
-
-                    });
-
+                  } );
                     function readURL(input) {
                       if (input.files && input.files[0]) {
                           var reader = new FileReader();
