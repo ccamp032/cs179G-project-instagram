@@ -35,7 +35,10 @@
                     Comments ({{count($post['comments'])}})
                   </div>
                   <div class="stats-right stats-section">
-                    {{ $post['likes'] }} <i class="material-icons">thumb_up</i>  <i class="material-icons">thumb_down</i> {{ $post['dislikes'] }}
+                    <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCountMain">{{ $post['likes'] }}</p>
+                    <i class="material-icons">thumb_up</i>
+                    <i class="material-icons">thumb_down</i>
+                    <p style="display:inline" id="post{{ $post['post']['id'] }}DislikeCountMain">{{ $post['dislikes'] }}</a>
                   </div>
                 </div>
               </div>
@@ -54,6 +57,10 @@
                   <div style="width:70%; text-align:center; margin:auto;">
                     <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
                   </div>
+                  <br>
+                  <a href='{{ url($post['post']['img_url']) }}' download='InstagramImage' class="button">
+                    <i style="float:right; margin-bottom:20px; cursor:pointer;" class="material-icons">cloud_download</i>
+                  </a>
                   <br>
                   <div style="width:100%; display:flex;">
                     <div class="stats" style="width: 100%; display:flex;">
@@ -145,9 +152,10 @@
                             post_id: "{{ $post['post']['id'] }}"
                          },
                          success:function(data) {
-                           console.log(data)
                           $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes)
                           $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
+                          $("#post{{ $post['post']['id'] }}LikeCountMain").text(data.likes)
+                          $("#post{{ $post['post']['id'] }}DislikeCountMain").text(data.dislikes);
 
                           $("#post{{ $post['post']['id'] }}Like").css("color", "#2196f3");
                           $("#post{{ $post['post']['id'] }}Dislike").css("color", "#6c757d");
@@ -164,9 +172,10 @@
                             post_id: "{{ $post['post']['id'] }}"
                          },
                          success:function(data) {
-                           console.log(data)
                            $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes);
                            $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
+                           $("#post{{ $post['post']['id'] }}LikeCountMain").text(data.likes)
+                           $("#post{{ $post['post']['id'] }}DislikeCountMain").text(data.dislikes);
 
                            $("#post{{ $post['post']['id'] }}Like").css("color", "#6c757d");
                            $("#post{{ $post['post']['id'] }}Dislike").css("color", "#f44336");

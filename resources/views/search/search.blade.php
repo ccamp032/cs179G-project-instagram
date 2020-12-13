@@ -69,7 +69,10 @@
                     Comments ({{count($post['comments'])}})
                   </div>
                   <div class="stats-right stats-section">
-                    {{ $post['likes'] }} <i class="material-icons">thumb_up</i>  <i class="material-icons">thumb_down</i> {{ $post['dislikes'] }}
+                    <p style="display:inline" id="post{{ $post['post']['id'] }}LikeCountMain">{{ $post['likes'] }}</p>
+                    <i class="material-icons">thumb_up</i>
+                    <i class="material-icons">thumb_down</i>
+                    <p style="display:inline" id="post{{ $post['post']['id'] }}DislikeCountMain">{{ $post['dislikes'] }}</a>
                   </div>
                 </div>
               </div>
@@ -183,9 +186,10 @@
                             post_id: "{{ $post['post']['id'] }}"
                          },
                          success:function(data) {
-                           console.log(data)
                           $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes)
                           $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
+                          $("#post{{ $post['post']['id'] }}LikeCountMain").text(data.likes)
+                          $("#post{{ $post['post']['id'] }}DislikeCountMain").text(data.dislikes);
 
                           $("#post{{ $post['post']['id'] }}Like").css("color", "#2196f3");
                           $("#post{{ $post['post']['id'] }}Dislike").css("color", "#6c757d");
@@ -202,9 +206,10 @@
                             post_id: "{{ $post['post']['id'] }}"
                          },
                          success:function(data) {
-                           console.log(data)
                            $("#post{{ $post['post']['id'] }}LikeCount").text(data.likes);
                            $("#post{{ $post['post']['id'] }}DislikeCount").text(data.dislikes);
+                           $("#post{{ $post['post']['id'] }}LikeCountMain").text(data.likes)
+                           $("#post{{ $post['post']['id'] }}DislikeCountMain").text(data.dislikes);
 
                            $("#post{{ $post['post']['id'] }}Like").css("color", "#6c757d");
                            $("#post{{ $post['post']['id'] }}Dislike").css("color", "#f44336");
