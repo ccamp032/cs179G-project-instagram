@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-  Route::get('leroy', ['as' => 'leroy.create', 'uses' => 'App\Http\Controllers\LeroyController@create']);
+    Route::get('leroy', ['as' => 'leroy.create', 'uses' => 'App\Http\Controllers\LeroyController@create']);
  	Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
  	Route::put('post', ['as' => 'post.createPost', 'uses' => 'App\Http\Controllers\PostController@createPost']);
 	Route::get('dashboard', ['as' => 'dashboard.view', 'uses' => 'App\Http\Controllers\DashboardController@loadDashboard']);
@@ -86,4 +86,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('myprofile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('myprofile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::any('profile/{userId}', ['as' => 'profile.getProfile', 'uses' => 'App\Http\Controllers\ProfileController@getProfile']);
+	Route::get('popular/users', ['as' => 'popular.users', 'uses' => 'App\Http\Controllers\PopularController@popularUsers']);
+	Route::get('popular/posts', ['as' => 'popular.posts', 'uses' => 'App\Http\Controllers\PopularController@popularPosts']);
 });

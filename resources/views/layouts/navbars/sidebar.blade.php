@@ -29,6 +29,32 @@
             <p>{{ __('Create Post') }}</p>
         </a>
       </li>
+      <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#popular" aria-expanded="true">
+          <i class="material-icons">pages</i>
+          <p>{{ __('Popular') }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse show" id="popular">
+          <ul class="nav" style="padding-left: 20px">
+            <li class="nav-item{{ $activePage == 'pop-users' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('popular.users') }}">
+                <i class="material-icons">person</i>
+                <span class="sidebar-normal"> {{ __('Users') }} </span>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav" style="padding-left: 20px">
+            <li class="nav-item{{ $activePage == 'pop-posts' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('popular.posts') }}">
+                <i class="material-icons">class</i>
+                <span class="sidebar-normal"> {{ __('Posts') }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
       <li class="nav-item{{ $activePage == 'icons' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('icons') }}">
           <i class="material-icons">bubble_chart</i>
