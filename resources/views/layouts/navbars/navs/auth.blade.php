@@ -30,14 +30,18 @@
               <select id="search_method_2" name="search_method_2" style="background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
                 width: 100%; border-left:none; border-right:none;">
                   <option value="name">Name</option>
-                  <option value="post_description">Post Description</option>                  
+                  <option value="post_description">Post Description</option>
+                  <option value="follower_count">Followers</option>
+                  <option value="post_tags">Post Tags</option>                
               </select>
             </div>
             <script>
               $('#search_method_1').change(function() {
                 if($(this).val() == "users") {
                   options = '<option value="name">Name</option> \
-                             <option value="post_description">Post Description</option>';
+                             <option value="post_description">Post Description</option> \
+                             <option value="follower_count">Followers</option> \
+                             <option value="post_tags">Post Tags</option>';
                              $('#search_method_2').css('margin-right', '0px');
                 }
                 else if($(this).val() == "posts") {
