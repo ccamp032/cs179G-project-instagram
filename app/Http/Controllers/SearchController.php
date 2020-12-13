@@ -227,10 +227,20 @@ class SearchController extends Controller
 
     public static function getPostsByDate($searchString)
     {
+      // regex to match date of format mm-dd-yyyy or m-d-yyyy
+      $date_pattern1 = "/([0-9]{1,2})-([0-9]{1,2})-([0-9]{4})/i";
 
+      // if date entered in format mm-dd-yyyy or m-d-yyyy reformat to yyyy-mm-dd or yyyy-m-d for searching posts
+      if(preg_match($date_pattern1, $searchString, $matches)) {
+        //dd($matches);
+        $searchString = $matches[3] . "-" . $matches[1] . "-" . $matches[2];
+      }
+      
+      //dd($searchString);
       $postsDates = Posts::whereDate('created_at', date($searchString))->orderBy('created_at', 'desc')->get()->toArray();
 
-      dd($postsDates);
+      //dd($postsDates);
+      return PostController::buildPosts($postsDates);
     }
 
 }
