@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
   <div class="container-fluid">
     <div class="navbar-wrapper">
-      <!-- <a class="navbar-brand" href="#">{{ $titlePage }}</a> -->
+      <!-- <a class="navbar-brand" href="#">{{ $activePage }}</a> -->
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
     <span class="sr-only">Toggle navigation</span>
@@ -20,6 +20,8 @@
             <option value="users">Users</option>
             <option value="description">Description</option>
             <option value="user_tags">User Tags</option>
+            <option value="description_user">User by post description</option>
+            <option value="user_post">Post by user</option>
           </select>
         <input type="text" value="" class="form-control" name ="search" placeholder="Search...">
         <button type="submit" class="btn btn-white btn-round btn-just-icon">

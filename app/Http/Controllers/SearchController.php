@@ -21,7 +21,15 @@ class SearchController extends Controller
         //Users_name
         if ($search_method == "users") {
           $users = self::getUsersByName($searchString);
-        } 
+        }
+        //User_by post_description
+        else if ($search_method == "description_user") {
+          $users = self::getUsersByPostDescription($searchString);
+        }
+        //Post_by_user
+        else if ($search_method == "user_post") {
+          $posts = self::getPostsByUser($searchString);
+        }
         //Posts_description
         else if ($search_method == "description") {
           $result = self::getPostsByDescription($searchString);
@@ -71,6 +79,63 @@ class SearchController extends Controller
           }
         }
         return $returnArr;
+    }
+
+
+    public static function getPostUserInfo($userId) {
+      $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
+      return $userInfo;
+  }
+
+    public static function getUsersByPostDescription($searchString)
+    {
+      $postDescriptions = Posts::where('description', 'like', '%' . $searchString . '%')->orderBy('user_id', 'asc')->get()->toArray();
+
+      $returnArr = [];
+
+      foreach($postDescriptions as $postDescription) {
+        $userInfo = self::getPostUserInfo($postDescription['user_id']);
+        array_push($returnArr, $userInfo);
+      }
+
+      return $returnArr;
+    }
+
+
+    public static function getPostsByUser($searchString)
+    {
+
+      $users = User::where('name', 'like', '%' . $searchString . '%')->get()->toArray();
+
+      //dd($users);
+      $returnArr = [];
+      $count = 0;
+
+      /*
+      foreach ($tags as $tag) {
+          $posts = Posts::where('id', '=', $tag['post_id'])->orderBy('created_at', 'desc')->get()->toArray();
+          foreach ($posts as $post) {
+            array_push($returnArr, $post);
+          }
+        }
+        return $returnArr;
+      */
+
+
+      foreach($users as $user) {
+        // $posts = Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray();
+        //$posts = PostController::getUserPosts($user['id']);
+        $posts = Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray();
+        foreach ($posts as $post) {
+          array_push($returnArr, $post);
+        }
+        $count += 1;
+      }
+      # dd($count);
+      dd($posts);
+
+      return $returnArr;
+
     }
 
 }
