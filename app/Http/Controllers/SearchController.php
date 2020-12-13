@@ -30,6 +30,10 @@ class SearchController extends Controller
         else if ($search_method == "user_post") {
           $posts = self::getPostsByUser($searchString);
         }
+        //Posts_by_views 
+        else if ($search_method == "post_views") {
+          $posts = self::getPostsByViews($searchString);
+        }
         //Posts_description
         else if ($search_method == "description") {
           $result = self::getPostsByDescription($searchString);
@@ -116,9 +120,17 @@ class SearchController extends Controller
             array_push($returnArr, $post);
           }
         }
-
+        dd($returnArr);
         return $returnArr;
 
+    }
+
+    public static function getPostsByViews($searchString)
+    {
+        //$userInfo = User::where('id', '=', $userId)->get()->toArray();
+        $postsViews = Posts::where('views', '=', $searchString)->orderBy('views', 'desc')->get()->toArray();
+
+        return PostController::buildPosts($postsViews);
     }
 
 }

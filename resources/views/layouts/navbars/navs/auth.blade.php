@@ -22,6 +22,7 @@
             <option value="user_tags">User Tags</option>
             <option value="description_user">User by post description</option>
             <option value="user_post">Post by user</option>
+            <option value="post_views">views</option>
           </select>
         <input type="text" value="" class="form-control" name ="search" placeholder="Search...">
         <button type="submit" class="btn btn-white btn-round btn-just-icon">
