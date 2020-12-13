@@ -16,6 +16,7 @@ class SearchController extends Controller
         $searchString = $request->search;
         $search_method_1 = $request->search_method_1;
         $search_method_2 = $request->search_method_2;
+        $search_method_3 = $request->search_method_3;
 
         $users = [];
         $posts = [];
@@ -69,7 +70,7 @@ class SearchController extends Controller
           }
           //Posts_by_date
           else if ($search_method_2 == "post_date"){
-            $posts = self::getPostsByDate($searchString);
+            $posts = self::getPostsByDate($request->post_date);
           }
 
         }
