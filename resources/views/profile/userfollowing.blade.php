@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'my-following', 'titlePage' => __('My Following List')])
+@extends('layouts.app', ['activePage' => 'user-following', 'titlePage' => __('User Following List')])
 
 @section('content')
 <div class="content">
@@ -7,7 +7,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">My Following</h4>
+            <h4 class="card-title ">{{ $userInfo['name'] }}'s Following</h4>
             <p class="card-category">Users</p>
           </div>
           <div class="card-body">
@@ -24,7 +24,7 @@
                   </th>
                 </thead>
                 <tbody>
-                    @foreach($myFollowing as $user)
+                    @foreach($userFollowing as $user)
                       <tr>
                         <td>
                           {{ $user['id'] }}

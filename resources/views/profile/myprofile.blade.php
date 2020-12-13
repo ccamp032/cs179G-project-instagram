@@ -53,7 +53,7 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
-              <a href="{{ route('profile.followers') }}" name ="myFollowers">
+              <a href="{{ route('profile.myfollowers') }}" name ="myFollowers">
                 <div class="card-icon" style="color: white">
                   <i class="material-icons">supervisor_account</i>
                 </div>
@@ -71,7 +71,7 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-icon">
-              <a href="{{ route('profile.following') }}" name ="myFollowing">
+              <a href="{{ route('profile.myfollowing') }}" name ="myFollowing">
                 <div class="card-icon" style="background-color: rgb(204, 0, 255); color: white">
                   <i class="material-icons">redo</i>
                 </div>

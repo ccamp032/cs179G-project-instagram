@@ -23,6 +23,18 @@
             <p>{{ __('My Profile') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'my-followers' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('profile.myfollowers') }}">
+          <i class="material-icons">supervisor_account</i>
+            <p>{{ __('My Followers') }}</p>
+        </a>
+      </li>
+      <li class="nav-item{{ $activePage == 'my-following' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('profile.myfollowing') }}">
+          <i class="material-icons">redo</i>
+            <p>{{ __('My Following') }}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'create-post' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('post.create') }}">
           <i class="material-icons">post_add</i>

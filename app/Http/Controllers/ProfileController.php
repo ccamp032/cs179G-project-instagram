@@ -91,6 +91,32 @@ class ProfileController extends Controller
                                           ->with('isFollowing', $followingUser);
     }
 
+    public static function userFollowers($userId) {
+        $followers = [];
+        $myFollowers = PostController::getUserFollowers($userId);
+        foreach ($myFollowers as $follower) {
+            $followerInfo = User::where('id', '=', $follower['follower_user_id'])->get()->first()->toArray();
+            array_push($followers, $followerInfo);
+        }
+        $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
+        
+        return view('profile.userfollowers')->with('userFollowers', $followers)
+                                            ->with('userInfo', $userInfo);
+    }           
+
+    public static function userFollowing($userId) {
+        $followings = [];
+        $myFollowing = PostController::getUserFollowings($userId);
+        foreach ($myFollowing as $following) {
+            $followingInfo = User::where('id', '=', $following['follower_user_id'])->get()->first()->toArray();
+            array_push($followings, $followingInfo);
+        }
+        $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
+
+        return view('profile.userfollowing')->with('userFollowing', $followings)
+                                            ->with('userInfo', $userInfo);
+    }
+
     /**
      * Update the profile
      *
