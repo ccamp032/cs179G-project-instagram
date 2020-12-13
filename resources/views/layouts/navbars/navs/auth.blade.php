@@ -77,8 +77,8 @@
                        <option value="misc_tags">Misc Tags</option> \
                        <option value="post_views">Views</option> \
                        <option value="post_date">Date</option> \
-                       <option value="like_count">Like Count</options> \ 
-                       <option value="comments_count">Comments Count</options>';
+                       <option value="like_count">Like Count</option> \
+                       <option value="comments_count">Comments Count</option>';
             $('#search_method_2').css('margin-right', '37px');
             $('#search_method_3').css('display', 'none');
             $('#post_date').css('display', 'none');
