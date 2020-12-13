@@ -15,14 +15,42 @@
         @csrf
         @method('put')
         <div class="input-group no-border">
-          <select name="search_method" style="margin-right: 20px; background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
-            width: 50%; border-left:none; border-right:none;">
-            <option value="users">Users</option>
-            <option value="description">Description</option>
-            <option value="user_tags">User Tags</option>
-            <option value="description_user">User by post description</option>
-            <option value="user_post">Post by user</option>
-          </select>
+          <div class="row" style="padding-top: 10px; padding-right: 50px">
+            <div>
+              <select id="search_method_1" name="search_method_1" style="margin-right: 20px; background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
+                width: 100%; border-left:none; border-right:none;">
+                <option value="users">Users</option>
+                <option value="posts">Posts</option>
+              </select>
+            </div>
+            <div style="padding-left: 30px; padding-right: 30px">
+              by
+            </div>
+            <div>
+              <select id="search_method_2" name="search_method_2" style="background: #00ffff00; color: grey; border-top: none; border-left: 1px solid grey;
+                width: 100%; border-left:none; border-right:none;">
+                  <option value="name">Name</option>
+                  <option value="post_description">Post Description</option>                  
+              </select>
+            </div>
+            <script>
+              $('#search_method_1').change(function() {
+                if($(this).val() == "users") {
+                  options = '<option value="name">Name</option> \
+                             <option value="post_description">Post Description</option>';
+                             $('#search_method_2').css('margin-right', '0px');
+                }
+                else if($(this).val() == "posts") {
+                  options = '<option value="description">Description</option> \
+                             <option value="user_name">User Name</option> \
+                             <option value="user_tags">User Tags</option> \
+                             <option value="views">Views</option>';
+                  $('#search_method_2').css('margin-right', '37px');
+                }
+                $('#search_method_2').html(options);
+              });
+            </script>
+        </div>
         <input type="text" value="" class="form-control" name ="search" placeholder="Search...">
         <button type="submit" class="btn btn-white btn-round btn-just-icon">
           <i class="material-icons">search</i>
