@@ -30,13 +30,13 @@
         </a>
       </li>
       <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
-        <a class="nav-link" data-toggle="collapse" href="#popular" aria-expanded="true">
+        <a class="nav-link" data-toggle="collapse" href="#popular" aria-expanded="false">
           <i class="material-icons">pages</i>
           <p>{{ __('Popular') }}
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="popular">
+        <div class="collapse hide" id="popular">
           <ul class="nav" style="padding-left: 20px">
             <li class="nav-item{{ $activePage == 'pop-users' ? ' active' : '' }}">
               <a class="nav-link" href="{{ route('popular.users') }}">
