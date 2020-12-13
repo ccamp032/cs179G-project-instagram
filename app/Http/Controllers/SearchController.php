@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Posts;
 use App\UserTags;
+use App\Followers;
 
 
 class SearchController extends Controller
@@ -24,6 +25,9 @@ class SearchController extends Controller
 
           if($search_method_2 == "name") {
             $users = self::getUsersByName($searchString);
+          }
+          else if($search_method_2 == "follower_count") {
+            $users = self::getUserbyFollowers($searchString);
           }
           //User_by post_description
           else if ($search_method_2 == "post_description") {
@@ -138,6 +142,27 @@ class SearchController extends Controller
         $postsViews = Posts::where('views', '=', $searchString)->orderBy('views', 'desc')->get()->toArray();
 
         return PostController::buildPosts($postsViews);
+    }
+
+    public static function getUserbyFollowers($searchString)
+    {
+        
+      $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
+      ->groupBy('user_id')
+      ->orderby('count', 'desc')
+      ->get()
+      ->toArray();
+
+      $returnArr = [];
+
+      foreach($followers as $follower) {
+        if($follower['count'] == $searchString) {
+          $userInfo = self::getPostUserInfo($follower['user_id']);
+          array_push($returnArr, $userInfo);
+        }
+      }
+
+      return $returnArr;
     }
 
 }
