@@ -53,7 +53,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('MiscTags') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Misc Tags') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('misc_tags') ? ' has-danger' : '' }}">
                       <input style="width:85%" class="" name="misc_tags_name" id="misc_input-tags" type="text" placeholder="{{ __('Misc Tags') }}" value="" />
@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('User_Tags') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('User Tags') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('user_tags') ? ' has-danger' : '' }}">
                       <input style="width:85%;" class="" name="user_tags_name" id="user_input-tags" type="text" placeholder="{{ __('User Tags') }}" value="" />
