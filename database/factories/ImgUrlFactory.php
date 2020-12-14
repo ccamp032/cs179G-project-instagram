@@ -42,7 +42,32 @@ $factory->define(ImgUrl::class, function (Faker $faker) {
     "https://randomwordgenerator.com/img/picture-generator/53e7d4464d52aa14f1dc8460962e33791c3ad6e04e50774971267bd19549c6_640.jpg",
     "https://randomwordgenerator.com/img/picture-generator/53e9d1404f52b10ff3d8992cc12c30771037dbf85254794e702673d0934d_640.jpg",
     "https://randomwordgenerator.com/img/picture-generator/54e0d1464e54a514f1dc8460962e33791c3ad6e04e507440762e7adc934bc7_640.jpg",
-    "https://randomwordgenerator.com/img/picture-generator/54e0d6424f51a514f1dc8460962e33791c3ad6e04e5074417c2e7dd1934dc2_640.jpg"
+    "https://randomwordgenerator.com/img/picture-generator/54e0d6424f51a514f1dc8460962e33791c3ad6e04e5074417c2e7dd1934dc2_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e6d0424950a914f1dc8460962e33791c3ad6e04e50744172287ad2964cc0_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/52e0d7414a5aad14f1dc8460962e33791c3ad6e04e507440712f7bd6954bc5_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e7d2464e57a814f1dc8460962e33791c3ad6e04e5074417c2d78d39545c6_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e7d54b4b51a514f1dc8460962e33791c3ad6e04e507441722978d69f48c6_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e8dd424b55ae14f1dc8460962e33791c3ad6e04e5074417c2f7dd6914fc3_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e1dc424b57a914f1dc8460962e33791c3ad6e04e50744074267ad09f44c1_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e9d04b4a5aaf14f1dc8460962e33791c3ad6e04e507440722d72d09245c7_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e4d0444255ae14f1dc8460962e33791c3ad6e04e5074417c2f7cd39044c4_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e0d1404d55af14f1dc8460962e33791c3ad6e04e507440752b7fd49548cc_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/53e3dd404c52ab14f1dc8460962e33791c3ad6e04e507440712c7add964dcd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/52e2d3474c51b10ff3d8992cc12c30771037dbf85254794075297ad59e4e_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/5ee2d3424a57b10ff3d8992cc12c30771037dbf85254794e722679d7934d_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e5dd464d54ac14f1dc8460962e33791c3ad6e04e50744172297ed29f4bc4_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e1d7464c55ac14f1dc8460962e33791c3ad6e04e50744074267bd6934fc2_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e5d1464d56a914f1dc8460962e33791c3ad6e04e5074417d2e72d6904fc6_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e9d5444e5ba814f1dc8460962e33791c3ad6e04e50744172287ad2944cc3_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e3d24a4f55a414f1dc8460962e33791c3ad6e04e50744172287ad29749c3_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e8d64a4d56a514f1dc8460962e33791c3ad6e04e507440762e79d79649c7_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e4d545425aa514f1dc8460962e33791c3ad6e04e507440742f7cd0944fcd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/53e6dc404951b10ff3d8992cc12c30771037dbf852547848702e7ed19348_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e6d6474e53ae14f1dc8460962e33791c3ad6e04e5074417c2e7dd19245c0_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/piranhas-123287_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/5ee2d1404d52b10ff3d8992cc12c30771037dbf85254784a70287fd2924f_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e3d0414b54a914f1dc8460962e33791c3ad6e04e507749712a72d3954dcd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/52e3dd40435bb10ff3d8992cc12c30771037dbf85254794e702672d69f4b_640.jpg"
   );
 
   $rand_keys = array_rand($photoList, 2);
