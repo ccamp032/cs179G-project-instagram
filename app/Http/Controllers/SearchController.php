@@ -350,7 +350,8 @@ class SearchController extends Controller
       $postCounts = [];
 
       foreach($users as $user) {
-        array_push($postCounts, ['user_id'=> $user['id'], 'post_count'=>count(PostController::getUserPosts($user['id']))]);
+        $temp = count(Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray());
+        array_push($postCounts, ['user_id'=> $user['id'], 'post_count'=>$temp]);
       }
 
       $returnArr = [];
