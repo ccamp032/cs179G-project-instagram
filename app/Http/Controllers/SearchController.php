@@ -44,6 +44,14 @@ class SearchController extends Controller
           else if ($search_method_2 == "misc_tags") {
             $users = self::getUsersByMiscTags($searchString);
           }
+          //Posts_by_likes
+          else if ($search_method_2 == "like_count"){
+            $users = self::getUsersByLikeCount($searchString, $search_method_3);
+          }
+          //Posts_by_likes
+          else if ($search_method_2 == "post_count"){
+            $users = self::getUsersByPostCount($searchString, $search_method_3);
+          }
 
         }
         else if ($search_method_1 == "posts") {
@@ -301,6 +309,63 @@ class SearchController extends Controller
 
       //dd($returnArr);
       return PostController::buildPosts($returnArr);
+    }
+
+    public static function getUsersByLikeCount($searchString, $searchMethod) {
+      $postLikes = LikesDislikes::select('user_id', LikesDislikes::raw('COUNT(user_id) as count'))
+      ->where('like', '=', 1)
+      ->groupBy('user_id')
+      ->orderby('count', 'desc')
+      ->get()
+      ->toArray();
+
+      $returnArr = [];
+
+      foreach($postLikes as $postLike) {
+        if($searchMethod == "less_than") {
+          if(intval($postLike['count']) < intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postLike['user_id']));
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postLike['count'] == $searchString) {
+            array_push($returnArr, self::getPostUserInfo($postLike['user_id']));
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postLike['count']) > intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postLike['user_id']));
+          }
+        }
+      }
+
+      return $returnArr;
+    }
+
+    public static function getUsersByPostCount($searchString, $searchMethod) {
+      $postCounts= Posts::select('user_id', LikesDislikes::raw('COUNT(user_id) as count'))
+      ->groupBy('user_id')
+      ->orderby('count', 'desc')
+      ->get()
+      ->toArray();
+
+      $returnArr = [];
+
+      foreach($postCounts as $postCount) {
+        if($searchMethod == "less_than") {
+          if(intval($postCount['count']) < intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postCount['user_id']));
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postCount['count'] == $searchString) {
+            array_push($returnArr, self::getPostUserInfo($postCount['user_id']));
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postCount['count']) > intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postCount['user_id']));
+          }
+        }
+      }
+
+      return $returnArr;
     }
 
     // Cant use search string of 0 becuse they do not exixt in the commnets table
