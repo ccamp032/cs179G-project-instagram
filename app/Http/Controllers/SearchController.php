@@ -256,15 +256,6 @@ class SearchController extends Controller
 
     public static function getPostsByLikeCount($searchString)
     {
-      //$likeCount = LikesDislikes::where('user_id', '=', $userId)->where('like', '=', 1)->get()->toArray();
-      /*
-      $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
-      ->groupBy('user_id')
-      ->orderby('count', 'desc')
-      ->get()
-      ->toArray();
-
-      */
 
       $postLikes = LikesDislikes::select('post_id', LikesDislikes::raw('COUNT(post_id) as count'))
       ->where('like', '=', 1)
