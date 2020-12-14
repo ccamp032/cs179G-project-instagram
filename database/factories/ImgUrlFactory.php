@@ -117,7 +117,7 @@ $factory->define(ImgUrl::class, function (Faker $faker) {
     "https://randomwordgenerator.com/img/picture-generator/57e0d6474e56ae14f1dc8460962e33791c3ad6e04e507440752f73dd9249c4_640.jpg",
     "https://randomwordgenerator.com/img/picture-generator/54e5d2434953a514f1dc8460962e33791c3ad6e04e507440742f7cd09645cc_640.jpg",
     "https://randomwordgenerator.com/img/picture-generator/57e5d74a4f57af14f1dc8460962e33791c3ad6e04e50744172297cd69745c5_640.jpg",
-    "https://randomwordgenerator.com/img/picture-generator/55e6d04a4f56a414f1dc8460962e33791c3ad6e04e507440722d72d19548c1_640.jpg
+    "https://randomwordgenerator.com/img/picture-generator/55e6d04a4f56a414f1dc8460962e33791c3ad6e04e507440722d72d19548c1_640.jpg"
   );
 
   $rand_keys = array_rand($photoList, 2);
