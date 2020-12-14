@@ -72,7 +72,7 @@
           <div class="card card-stats">
             <div class="card-header card-header-icon">
               <a href="{{ route('profile.myfollowing') }}" name ="myFollowing">
-                <div class="card-icon" style="background-color: rgb(204, 0, 255); color: white">
+                <div class="card-icon" style="background: linear-gradient(60deg, #2196f3, #005da7); color: white; box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px #2196f3;">
                   <i class="material-icons">redo</i>
                 </div>
               </a>
@@ -89,7 +89,7 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-icon">
-              <div class="card-icon" style="background-color: rgb(255, 187, 0)">
+              <div class="card-icon" style="background: linear-gradient(60deg, #9c27b0, #8a1e9c); box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px #9c27b0;">
                 <i class="material-icons">grade</i>
               </div>
               <p class="card-category">H.C.A.Y</p>
@@ -214,9 +214,9 @@
                     </div><br>
                     <input style="display:none; width:80%;" id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
                     <button style="display:none;" id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
-                    <div class="row" id="post{{ $post['post']['id'] }}editPostContainer" style="width: 100%; padding-top: 10px">
-                      <div class="container" style="width: 50%;">
-                        <div style="float: right; padding-right: 15px">
+                    <div class="row" id="post{{ $post['post']['id'] }}editPostContainer" style="width: 100%; padding-top: 10px; text-align:center; margin:auto;">
+                      <div class="container">
+                        <div>
                           <a href="{{ route('post.edit') }}?id={{ $post['post']['id'] }}">
                             <button style="background-color: #2196f3;" id="post{{ $post['post']['id'] }}editPost" type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
                           </a>

@@ -49,7 +49,7 @@
           <div class="card card-stats">
             <div class="card-header card-header-icon">
               <a href="{{ route('profile.myfollowing') }}" name ="myFollowing">
-                <div class="card-icon" style="background-color: rgb(204, 0, 255); color: white">
+                <div class="card-icon" style="background: linear-gradient(60deg, #2196f3, #005da7); color: white; box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px #2196f3;">
                   <i class="material-icons">redo</i>
                 </div>
               </a>
@@ -66,7 +66,7 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-icon">
-              <div class="card-icon" style="background-color: rgb(255, 187, 0)">
+              <div class="card-icon" style="background: linear-gradient(60deg, #9c27b0, #8a1e9c); box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px #9c27b0;">
                 <i class="material-icons">grade</i>
               </div>
               <p class="card-category">H.C.A.Y</p>
