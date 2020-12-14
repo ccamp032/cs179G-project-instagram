@@ -58,7 +58,7 @@
               </div>
               <div class="card-body">
                 <h4 class="card-title">{{ $post['post']['description'] }}</h4>
-              <p class="card-category">Posted By: {{ $post['user_info']['name'] }}<br>Date: {{date('m-d-Y', strtotime($post['post']['created_at']))}}</p>
+                <p class="card-category">Posted By: <a style="padding:0px; margin:auto; display:inline;" class="nav-link" href="{{ route('profile.getProfile', ['userId' => $post['user_info']['id'] ]) }}" name ="userId">{{ $post['user_info']['name'] }}</a><br>Date: {{date('m-d-Y', strtotime($post['post']['created_at']))}}</p>
               </div>
               <div class="card-footer">
                 <div class="stats" style="width: 100%; ">
