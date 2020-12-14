@@ -6,6 +6,8 @@ use App\User;
 use App\Posts;
 use App\UserTags;
 use App\Followers;
+use App\LikesDislikes;
+use App\Comments;
 
 
 class SearchController extends Controller
@@ -71,6 +73,14 @@ class SearchController extends Controller
           //Posts_by_date
           else if ($search_method_2 == "post_date"){
             $posts = self::getPostsByDate($request->post_date);
+          }
+          //Posts_by_likes
+          else if ($search_method_2 == "like_count"){
+            $posts = self::getPostsByLikeCount($searchString);
+          }
+          //Posts_by_comments
+          else if ($search_method_2 == "comments_count"){
+            $posts = self::getPostsByCommentCount($searchString, $search_method_3);
           }
 
         }
@@ -242,6 +252,67 @@ class SearchController extends Controller
 
       //dd($postsDates);
       return PostController::buildPosts($postsDates);
+    }
+
+    public static function getPostsByLikeCount($searchString)
+    {
+      //$likeCount = LikesDislikes::where('user_id', '=', $userId)->where('like', '=', 1)->get()->toArray();
+      /*
+      $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
+      ->groupBy('user_id')
+      ->orderby('count', 'desc')
+      ->get()
+      ->toArray();
+
+      */
+
+      $postLikes = LikesDislikes::select('post_id', LikesDislikes::raw('COUNT(post_id) as count'))
+      ->where('like', '=', 1)
+      ->groupBy('post_id')
+      ->orderby('count', 'desc')
+      ->get()
+      ->toArray();
+
+      dd($postLikes);
+    }
+
+    // Cant use search string of 0 becuse they do not exixt in the commnets table
+    public static function getPostsByCommentCount($searchString, $searchMethod)
+    {
+      $postComments = Comments::select('post_id', Comments::raw('COUNT(post_id) as count'))
+      ->groupBy('post_id')
+      ->get()
+      ->toArray();
+
+      $returnArr = [];
+      $commentArr= [];
+      //dd($postComments);
+      foreach($postComments as $postComment) {
+
+        if($searchMethod == "less_than") {
+          if(intval($postComment['count']) < intval($searchString)) {
+            array_push($returnArr, ['id'=> $postComment['post_id']]);
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postComment['count'] == $searchString) {
+            array_push($returnArr, ['id'=> $postComment['post_id']]);
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postComment['count']) > intval($searchString)) {
+            array_push($returnArr, ['id'=> $postComment['post_id']]);
+          }
+        }
+        
+      }
+
+      foreach($returnArr as $postIdList){
+        $posts = Posts::where('id', '=', $postIdList['id'])->get()->first()->toArray();
+        array_push($commentArr, $posts);
+      }
+
+
+      //dd($commentArr);
+      return PostController::buildPosts($commentArr);
     }
 
 }
