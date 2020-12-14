@@ -44,11 +44,11 @@ class SearchController extends Controller
           else if ($search_method_2 == "misc_tags") {
             $users = self::getUsersByMiscTags($searchString);
           }
-          //Posts_by_likes
+          //User_by_likes
           else if ($search_method_2 == "like_count"){
             $users = self::getUsersByLikeCount($searchString, $search_method_3);
           }
-          //Posts_by_likes
+          //User_by_posts
           else if ($search_method_2 == "post_count"){
             $users = self::getUsersByPostCount($searchString, $search_method_3);
           }
@@ -233,25 +233,27 @@ class SearchController extends Controller
     // Cant use search string of 0
     public static function getUserbyFollowers($searchString, $searchMethod)
     {
-      $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
-      ->groupBy('user_id')
-      ->orderby('count', 'desc')
-      ->get()
-      ->toArray();
+      $users = User::select('*')->get()->toArray();
+
+      $followers = [];
+
+      foreach($users as $user) {
+        array_push($followers, ['user_id'=> $user['id'], 'follower_count'=>count(PostController::getUserFollowers($user['id']))]);
+      }
 
       $returnArr = [];
 
       foreach($followers as $follower) {
         if($searchMethod == "less_than") {
-          if(intval($follower['count']) < intval($searchString)) {
+          if(intval($follower['follower_count']) < intval($searchString)) {
             array_push($returnArr, self::getPostUserInfo($follower['user_id']));
           }
         }else if($searchMethod == "equal_to") {
-          if($follower['count'] == $searchString) {
+          if($follower['follower_count'] == $searchString) {
             array_push($returnArr, self::getPostUserInfo($follower['user_id']));
           }
         }else if($searchMethod == "greater_than") {
-          if(intval($follower['count']) > intval($searchString)) {
+          if(intval($follower['follower_count']) > intval($searchString)) {
             array_push($returnArr, self::getPostUserInfo($follower['user_id']));
           }
         }
