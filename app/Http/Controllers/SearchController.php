@@ -285,34 +285,25 @@ class SearchController extends Controller
       ->toArray();
 
       $returnArr = [];
-      $commentArr= [];
       //dd($postComments);
       foreach($postComments as $postComment) {
-
         if($searchMethod == "less_than") {
           if(intval($postComment['count']) < intval($searchString)) {
-            array_push($returnArr, ['id'=> $postComment['post_id']]);
+            array_push($returnArr, Posts::where('id', '=', $postComment['post_id'])->get()->first()->toArray());
           }
         }else if($searchMethod == "equal_to") {
           if($postComment['count'] == $searchString) {
-            array_push($returnArr, ['id'=> $postComment['post_id']]);
+            array_push($returnArr, Posts::where('id', '=', $postComment['post_id'])->get()->first()->toArray());
           }
         }else if($searchMethod == "greater_than") {
           if(intval($postComment['count']) > intval($searchString)) {
-            array_push($returnArr, ['id'=> $postComment['post_id']]);
+            array_push($returnArr, Posts::where('id', '=', $postComment['post_id'])->get()->first()->toArray());
           }
         }
-        
       }
 
-      foreach($returnArr as $postIdList){
-        $posts = Posts::where('id', '=', $postIdList['id'])->get()->first()->toArray();
-        array_push($commentArr, $posts);
-      }
-
-
-      //dd($commentArr);
-      return PostController::buildPosts($commentArr);
+      //dd($returnArr);
+      return PostController::buildPosts($returnArr);
     }
 
 }
