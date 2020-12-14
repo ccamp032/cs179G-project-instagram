@@ -214,13 +214,12 @@
                     </div><br>
                     <input style="display:none; width:80%;" id="post{{ $post['post']['id'] }}newComment" type="text" value="" name ="comment" placeholder="Comment..." style="width: 83%;">
                     <button style="display:none;" id="post{{ $post['post']['id'] }}submitComment" type="submit" class="btn btn-primary">{{ __('Post') }}</button>
-                    <div class="row" id="post{{ $post['post']['id'] }}editPostContainer" style="display: none; width: 100%; padding-top: 10px">
+                    <div class="row" id="post{{ $post['post']['id'] }}editPostContainer" style="width: 100%; padding-top: 10px">
                       <div class="container" style="width: 50%;">
-                        <div style="float: right">
-                          <button style="background-color: #f44336; display:none;" id="post{{ $post['post']['id'] }}deleteComment" type="submit" class="btn btn-primary">{{ __('Delete') }}</button>
-                        </div>
                         <div style="float: right; padding-right: 15px">
-                          <button style="background-color: #2196f3; display:none;" id="post{{ $post['post']['id'] }}editComment" type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
+                          <a href="{{ route('post.edit') }}?id={{ $post['post']['id'] }}">
+                            <button style="background-color: #2196f3;" id="post{{ $post['post']['id'] }}editPost" type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -230,17 +229,11 @@
                         $("#post{{ $post['post']['id'] }}commentsBox").slideUp();
                         $("#post{{ $post['post']['id'] }}newComment").slideUp();
                         $("#post{{ $post['post']['id'] }}submitComment").slideUp();
-                        $("#post{{ $post['post']['id'] }}editComment").slideUp();
-                        $("#post{{ $post['post']['id'] }}deleteComment").slideUp();
-                        $("#post{{ $post['post']['id'] }}editPostContainer").slideUp();
                         $("#post{{ $post['post']['id'] }}spacer").slideUp();
                       } else {
                         $("#post{{ $post['post']['id'] }}commentsBox").slideDown();
                         $("#post{{ $post['post']['id'] }}newComment").slideDown();
                         $("#post{{ $post['post']['id'] }}submitComment").slideDown();
-                        $("#post{{ $post['post']['id'] }}editComment").slideDown();
-                        $("#post{{ $post['post']['id'] }}deleteComment").slideDown();
-                        $("#post{{ $post['post']['id'] }}editPostContainer").slideDown();
                         $("#post{{ $post['post']['id'] }}spacer").slideDown();
                       }
                     });

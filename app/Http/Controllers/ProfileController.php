@@ -33,11 +33,6 @@ class ProfileController extends Controller
         $mySocialRating = PostController::getHCAY();
         $myInfo = PostController::getUserInfo();
 
-        // echo "<pre>";
-        // var_export($myInfo);
-        // echo "</pre>";
-        // exit;
-
         return view('profile.myprofile')->with('myInfo', $myInfo)
                                         ->with('myPosts', $myPosts)
                                         ->with('myFollowers', $myFollowers)
@@ -54,7 +49,7 @@ class ProfileController extends Controller
             $followerInfo = User::where('id', '=', $follower['follower_user_id'])->get()->first()->toArray();
             array_push($followers, $followerInfo);
         }
-        
+
         return view('profile.myfollowers')->with('myFollowers', $followers);
     }
 
@@ -69,7 +64,7 @@ class ProfileController extends Controller
 
         return view('profile.myfollowing')->with('myFollowing', $followings);
     }
-    
+
     public static function getProfile($userId)
     {
         $userPosts = PostController::getUserPosts($userId);
@@ -99,10 +94,10 @@ class ProfileController extends Controller
             array_push($followers, $followerInfo);
         }
         $userInfo = User::where('id', '=', $userId)->get()->first()->toArray();
-        
+
         return view('profile.userfollowers')->with('userFollowers', $followers)
                                             ->with('userInfo', $userInfo);
-    }           
+    }
 
     public static function userFollowing($userId) {
         $followings = [];
