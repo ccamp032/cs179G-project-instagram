@@ -42,38 +42,6 @@ Route::post('/post/addComment/','App\Http\Controllers\PostController@addComment'
 Route::post('/profile/followUser/', 'App\Http\Controllers\ProfileController@followUser')->name('profile.followUser');
 Route::post('/profile/unfollowUser/', 'App\Http\Controllers\ProfileController@unfollowUser')->name('profile.unfollowUser');
 
-// Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('search.search');
-
-Route::group(['middleware' => 'auth'], function () {
-	Route::get('table-list', function () {
-		return view('pages.table_list');
-	})->name('table');
-
-	Route::get('typography', function () {
-		return view('pages.typography');
-	})->name('typography');
-
-	Route::get('icons', function () {
-		return view('pages.icons');
-	})->name('icons');
-
-	Route::get('map', function () {
-		return view('pages.map');
-	})->name('map');
-
-	Route::get('notifications', function () {
-		return view('pages.notifications');
-	})->name('notifications');
-
-	Route::get('rtl-support', function () {
-		return view('pages.language');
-	})->name('language');
-
-	Route::get('upgrade', function () {
-		return view('pages.upgrade');
-	})->name('upgrade');
-});
-
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
  	Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
@@ -95,3 +63,35 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('popular/users', ['as' => 'popular.users', 'uses' => 'App\Http\Controllers\PopularController@popularUsers']);
 	Route::get('popular/posts', ['as' => 'popular.posts', 'uses' => 'App\Http\Controllers\PopularController@popularPosts']);
 });
+
+// Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('search.search');
+
+// Route::group(['middleware' => 'auth'], function () {
+// 	Route::get('table-list', function () {
+// 		return view('pages.table_list');
+// 	})->name('table');
+
+// 	Route::get('typography', function () {
+// 		return view('pages.typography');
+// 	})->name('typography');
+
+// 	Route::get('icons', function () {
+// 		return view('pages.icons');
+// 	})->name('icons');
+
+// 	Route::get('map', function () {
+// 		return view('pages.map');
+// 	})->name('map');
+
+// 	Route::get('notifications', function () {
+// 		return view('pages.notifications');
+// 	})->name('notifications');
+
+// 	Route::get('rtl-support', function () {
+// 		return view('pages.language');
+// 	})->name('language');
+
+// 	Route::get('upgrade', function () {
+// 		return view('pages.upgrade');
+// 	})->name('upgrade');
+// });
