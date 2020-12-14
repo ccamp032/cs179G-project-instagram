@@ -164,7 +164,6 @@
                       <i class="material-icons">account_circle</i>
                     <div class="ripple-container"></div></button>
                    @endforeach
-
                   <a href='{{ url($post['post']['img_url']) }}' download='InstagramImage' class="button">
                     <i style="float:right; margin-bottom:20px; cursor:pointer;" class="material-icons">cloud_download</i>
                   </a>

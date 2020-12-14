@@ -87,11 +87,19 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <p style="font-size:13px; margin-left:16px;">
+                  Post Tags: {{ $post['post']['misc_tags'] }}
+                </p>
                 <div class="modal-body">
                   <div style="width:70%; text-align:center; margin:auto;">
                     <img style="width: 100%; " src="{{ url($post['post']['img_url']) }}">
                   </div>
                   <br>
+                  @foreach($post['user_tags'] as $user)
+                    <button style="margin:0px; padding:0px; top:-11px;" type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm" data-original-title="{{ $user['name'] }}">
+                      <i class="material-icons">account_circle</i>
+                    <div class="ripple-container"></div></button>
+                   @endforeach
                   <a href='{{ url($post['post']['img_url']) }}' download='InstagramImage' class="button">
                     <i style="float:right; margin-bottom:20px; cursor:pointer;" class="material-icons">cloud_download</i>
                   </a>
