@@ -6,6 +6,8 @@ use App\User;
 use App\Posts;
 use App\UserTags;
 use App\Followers;
+use App\LikesDislikes;
+use App\Comments;
 
 
 class SearchController extends Controller
@@ -28,7 +30,7 @@ class SearchController extends Controller
             $users = self::getUsersByName($searchString);
           }
           else if($search_method_2 == "follower_count") {
-            $users = self::getUserbyFollowers($searchString);
+            $users = self::getUserbyFollowers($searchString, $search_method_3);
           }
           //User_by post_description
           else if ($search_method_2 == "post_description") {
@@ -42,6 +44,14 @@ class SearchController extends Controller
           else if ($search_method_2 == "misc_tags") {
             $users = self::getUsersByMiscTags($searchString);
           }
+          //User_by_likes
+          else if ($search_method_2 == "like_count"){
+            $users = self::getUsersByLikeCount($searchString, $search_method_3);
+          }
+          //User_by_posts
+          else if ($search_method_2 == "post_count"){
+            $users = self::getUsersByPostCount($searchString, $search_method_3);
+          }
 
         }
         else if ($search_method_1 == "posts") {
@@ -51,7 +61,7 @@ class SearchController extends Controller
           }
           //Posts_by_views
           else if ($search_method_2 == "post_views") {
-            $posts = self::getPostsByViews($searchString);
+            $posts = self::getPostsByViews($searchString, $search_method_3);
           }
           //Posts_description
           else if ($search_method_2 == "description") {
@@ -71,6 +81,14 @@ class SearchController extends Controller
           //Posts_by_date
           else if ($search_method_2 == "post_date"){
             $posts = self::getPostsByDate($request->post_date);
+          }
+          //Posts_by_likes
+          else if ($search_method_2 == "like_count"){
+            $posts = self::getPostsByLikeCount($searchString, $search_method_3);
+          }
+          //Posts_by_comments
+          else if ($search_method_2 == "comments_count"){
+            $posts = self::getPostsByCommentCount($searchString, $search_method_3);
           }
 
         }
@@ -197,29 +215,46 @@ class SearchController extends Controller
 
     }
 
-    public static function getPostsByViews($searchString)
+    public static function getPostsByViews($searchString, $searchMethod)
     {
         //$userInfo = User::where('id', '=', $userId)->get()->toArray();
-        $postsViews = Posts::where('views', '=', $searchString)->orderBy('views', 'desc')->get()->toArray();
+        if($searchMethod == "less_than") {
+          $postsViews = Posts::where('views', '<', $searchString)->orderBy('views', 'desc')->get()->toArray();
+        } else if($searchMethod == "equal_to") {
+          $postsViews = Posts::where('views', '=', $searchString)->orderBy('views', 'desc')->get()->toArray();
+        }else if($searchMethod == "greater_than") {
+          $postsViews = Posts::where('views', '>', $searchString)->orderBy('views', 'desc')->get()->toArray();
+        }
+        
 
         return PostController::buildPosts($postsViews);
     }
 
-    public static function getUserbyFollowers($searchString)
+    public static function getUserbyFollowers($searchString, $searchMethod)
     {
+      $users = User::select('*')->get()->toArray();
 
-      $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
-      ->groupBy('user_id')
-      ->orderby('count', 'desc')
-      ->get()
-      ->toArray();
+      $followers = [];
+
+      foreach($users as $user) {
+        array_push($followers, ['user_id'=> $user['id'], 'follower_count'=>count(PostController::getUserFollowers($user['id']))]);
+      }
 
       $returnArr = [];
 
       foreach($followers as $follower) {
-        if($follower['count'] == $searchString) {
-          $userInfo = self::getPostUserInfo($follower['user_id']);
-          array_push($returnArr, $userInfo);
+        if($searchMethod == "less_than") {
+          if(intval($follower['follower_count']) < intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($follower['user_id']));
+          }
+        }else if($searchMethod == "equal_to") {
+          if($follower['follower_count'] == $searchString) {
+            array_push($returnArr, self::getPostUserInfo($follower['user_id']));
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($follower['follower_count']) > intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($follower['user_id']));
+          }
         }
       }
 
@@ -242,6 +277,137 @@ class SearchController extends Controller
 
       //dd($postsDates);
       return PostController::buildPosts($postsDates);
+    }
+
+    public static function getPostsByLikeCount($searchString, $searchMethod)
+    {
+
+      $posts = Posts::select('*')->get()->toArray();
+      
+      $postLikes = [];
+
+      foreach($posts as $post) {
+        $temp = count(LikesDislikes::where('post_id', '=', $post['id'])->where('like', '=', 1)->get()->toArray());
+        array_push($postLikes, ['post_id'=> $post['id'], 'count'=>$temp]);
+      }
+
+      $returnArr = [];
+      
+      foreach($postLikes as $postLike) {
+        if($searchMethod == "less_than") {
+          if(intval($postLike['count']) < intval($searchString)) {
+            array_push($returnArr, Posts::where('id', '=', $postLike['post_id'])->get()->first()->toArray());
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postLike['count'] == $searchString) {
+            array_push($returnArr, Posts::where('id', '=', $postLike['post_id'])->get()->first()->toArray());
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postLike['count']) > intval($searchString)) {
+            array_push($returnArr, Posts::where('id', '=', $postLike['post_id'])->get()->first()->toArray());
+          }
+        }
+      }
+
+      //dd($returnArr);
+      return PostController::buildPosts($returnArr);
+    }
+
+    public static function getUsersByLikeCount($searchString, $searchMethod) {
+      $users = User::select('*')->get()->toArray();
+
+      $postLikes = [];
+
+      foreach($users as $user) {
+        $temp = count(LikesDislikes::where('user_id', '=', $user['id'])->where('like', '=', 1)->get()->toArray());
+        array_push($postLikes, ['user_id'=> $user['id'], 'like_count'=>$temp]);
+      }
+      
+      $returnArr = [];
+
+      foreach($postLikes as $postLike) {
+        if($searchMethod == "less_than") {
+          if(intval($postLike['like_count']) < intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postLike['user_id']));
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postLike['like_count'] == $searchString) {
+            array_push($returnArr, self::getPostUserInfo($postLike['user_id']));
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postLike['like_count']) > intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postLike['user_id']));
+          }
+        }
+      }
+
+      return $returnArr;
+    }
+
+    public static function getUsersByPostCount($searchString, $searchMethod) {
+      $users = User::select('*')->get()->toArray();
+
+      $postCounts = [];
+
+      foreach($users as $user) {
+        $temp = count(Posts::where('user_id', '=', $user['id'])->orderBy('created_at', 'desc')->get()->toArray());
+        array_push($postCounts, ['user_id'=> $user['id'], 'post_count'=>$temp]);
+      }
+
+      $returnArr = [];
+
+      foreach($postCounts as $postCount) {
+        if($searchMethod == "less_than") {
+          if(intval($postCount['post_count']) < intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postCount['user_id']));
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postCount['post_count'] == $searchString) {
+            array_push($returnArr, self::getPostUserInfo($postCount['user_id']));
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postCount['post_count']) > intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($postCount['user_id']));
+          }
+        }
+      }
+
+      return $returnArr;
+    }
+
+    public static function getPostsByCommentCount($searchString, $searchMethod)
+    {
+
+      $posts = Posts::select('*')->get()->toArray();
+      
+      $postsComments = [];
+
+      foreach($posts as $post) {
+        $userPosts = Comments::where('post_id', '=', $post['id'])->get()->toArray();
+        array_push($postsComments, ['post_id'=> $post['id'], 'count'=>count($userPosts)]);
+      }
+
+
+      $returnArr = [];
+      //dd($postComments);
+      foreach($postsComments as $postComment) {
+        if($searchMethod == "less_than") {
+          if(intval($postComment['count']) < intval($searchString)) {
+            array_push($returnArr, Posts::where('id', '=', $postComment['post_id'])->get()->first()->toArray());
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postComment['count'] == $searchString) {
+            array_push($returnArr, Posts::where('id', '=', $postComment['post_id'])->get()->first()->toArray());
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postComment['count']) > intval($searchString)) {
+            array_push($returnArr, Posts::where('id', '=', $postComment['post_id'])->get()->first()->toArray());
+          }
+        }
+      }
+
+      //dd($returnArr);
+      return PostController::buildPosts($returnArr);
     }
 
 }

@@ -43,7 +43,7 @@
                 width: 50%; border-left:none; border-right:none;">
                   <option value="less_than"><</option>
                   <option value="equal_to">=</option>
-                  <option value="greater-than">></option>
+                  <option value="greater_than">></option>
               </select>
             </div>
           </div>
