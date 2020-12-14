@@ -32,16 +32,80 @@ class PostController extends Controller
     /**
      * Update the post
      *
+     */
+    public function edit(Request $request)
+    {
+      $user = auth()->user()->toArray();
+      if ($user['id'] != $request->id && $user['id'] != 1) {
+        return back()->withStatus(__('You do not have permission to edit that post.'));
+      } else {
+        $postInformation = Posts::where('id', '=', $request->id)->get()->first()->toArray();
+        $userTags = UserTags::where('post_id', '=', $request->id)->get()->toArray();
+
+        $userTagsString = "";
+        foreach ($userTags as $currentUser) {
+          $userTagsString .= $currentUser['user_name'] . ", ";
+        }
+
+        $postInformation['user_tags'] = $userTagsString;
+
+        $img_url = ImgUrl::where('id', $postInformation['id'])->get()->first()->toArray();
+        $postInformation['img_url'] = $img_url['url'];
+
+        return view('post.edit')->with('postInformation', $postInformation);
+      }
+    }
+
+    /**
+     * Update the post
+     *
      * @param  \App\Http\Requests\ProfileRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProfileRequest $request)
+    public function editPost(Request $request)
     {
-        var_export("test");
-        exit;
-        auth()->user()->update($request->all());
+        $user = auth()->user()->toArray();
 
-        return back()->withStatus(__('Profile successfully updated.'));
+        $editPost = Posts::where('id', '=', $request->post_id)->get()->first();
+
+        $filePath = "";
+        if ($request->has('image')) {
+          $image = $request->file('image');
+          // Make a image name based on user name and current timestamp
+          $name = Str::slug($user['id'].'_'.time());
+          // Define folder path
+          $folder = '/uploads/images/';
+          // Make a file path where image will be stored [ folder path + file name + file extension]
+          $filePath = "storage/" . $folder . $name. '.' . $image->getClientOriginalExtension();
+          // Upload image
+          $this->uploadOne($image, $folder, 'public', $name);
+        }
+
+        $editPost->description = $request->description;
+        $editPost->misc_tags = $request->misc_tags_name;
+
+        $deletedUserTags = UserTags::where('post_id', '=', $request->post_id)->delete();
+
+        $user_tags = $request->user_tags_name;
+        $user_tag_list = explode(",", $user_tags);
+
+        foreach($user_tag_list as $currentTag) {
+          $currentTag = trim($currentTag);
+          if ($currentTag != "") {
+            $currentUserId = User::select('id')->where('name', 'like', '%' . $currentTag . '%')->get()->first()->toArray();
+
+            $newUserTags = new UserTags;
+
+            $newUserTags->post_id = $request->post_id;
+            $newUserTags->user_id = $currentUserId['id'];
+            $newUserTags->user_name = $currentTag;
+
+            $newUserTags->save();
+          }
+        }
+        $editPost->save();
+
+        return back()->withStatus(__('Post successfully updated.'));
     }
 
     public function createPost(Request $request) {

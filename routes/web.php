@@ -76,9 +76,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-    Route::get('leroy', ['as' => 'leroy.create', 'uses' => 'App\Http\Controllers\LeroyController@create']);
  	Route::get('post', ['as' => 'post.create', 'uses' => 'App\Http\Controllers\PostController@create']);
  	Route::put('post', ['as' => 'post.createPost', 'uses' => 'App\Http\Controllers\PostController@createPost']);
+  Route::get('editpost', ['as' => 'post.edit', 'uses' => 'App\Http\Controllers\PostController@edit']);
+  Route::put('editpost', ['as' => 'post.editPost', 'uses' => 'App\Http\Controllers\PostController@editPost']);
+ 	Route::put('post', ['as' => 'post.delete', 'uses' => 'App\Http\Controllers\PostController@delete']);
 	Route::get('dashboard', ['as' => 'dashboard.view', 'uses' => 'App\Http\Controllers\DashboardController@loadDashboard']);
 	Route::put('search', ['as' => 'search.search', 'uses' => 'App\Http\Controllers\SearchController@search']);
 	Route::get('myprofile/edit', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
