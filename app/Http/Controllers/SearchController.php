@@ -30,7 +30,7 @@ class SearchController extends Controller
             $users = self::getUsersByName($searchString);
           }
           else if($search_method_2 == "follower_count") {
-            $users = self::getUserbyFollowers($searchString);
+            $users = self::getUserbyFollowers($searchString, $search_method_3);
           }
           //User_by post_description
           else if ($search_method_2 == "post_description") {
@@ -222,9 +222,9 @@ class SearchController extends Controller
         return PostController::buildPosts($postsViews);
     }
 
-    public static function getUserbyFollowers($searchString)
+    // Cant use search string of 0
+    public static function getUserbyFollowers($searchString, $searchMethod)
     {
-
       $followers = Followers::select('user_id', Followers::raw('COUNT(user_id) as count'))
       ->groupBy('user_id')
       ->orderby('count', 'desc')
@@ -234,9 +234,18 @@ class SearchController extends Controller
       $returnArr = [];
 
       foreach($followers as $follower) {
-        if($follower['count'] == $searchString) {
-          $userInfo = self::getPostUserInfo($follower['user_id']);
-          array_push($returnArr, $userInfo);
+        if($searchMethod == "less_than") {
+          if(intval($follower['count']) < intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($follower['user_id']));
+          }
+        }else if($searchMethod == "equal_to") {
+          if($follower['count'] == $searchString) {
+            array_push($returnArr, self::getPostUserInfo($follower['user_id']));
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($follower['count']) > intval($searchString)) {
+            array_push($returnArr, self::getPostUserInfo($follower['user_id']));
+          }
         }
       }
 
@@ -261,7 +270,7 @@ class SearchController extends Controller
       return PostController::buildPosts($postsDates);
     }
 
-    // Cant use search string of 0 becuse they do not exist in the LikesDislikes table
+    // Cant use search string of 0
     public static function getPostsByLikeCount($searchString, $searchMethod)
     {
 
