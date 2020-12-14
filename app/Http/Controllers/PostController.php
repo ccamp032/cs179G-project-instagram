@@ -207,6 +207,8 @@ class PostController extends Controller
 
         $currentPost['img_url'] = $img_url['url'];
 
+        $currentPost['misc_tags'] = str_replace(",", ", ", $currentPost['misc_tags']);
+
         $currentPostArr = [
           'post'        => $currentPost,
           'user_info'   => $user_info[0],
