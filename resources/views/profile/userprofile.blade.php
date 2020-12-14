@@ -7,7 +7,7 @@
         <div class="card card-stats">
           <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
-              <i class="material-icons">supervisor_account</i>
+              <i class="material-icons">person</i>
             </div>
             <div class="row">
               <div class="col-lg-3 col-md-6 col-sm-6" style="max-width: 100%; flex: 0 0 40%">
