@@ -76,7 +76,7 @@ class SearchController extends Controller
           }
           //Posts_by_likes
           else if ($search_method_2 == "like_count"){
-            $posts = self::getPostsByLikeCount($searchString);
+            $posts = self::getPostsByLikeCount($searchString, $search_method_3);
           }
           //Posts_by_comments
           else if ($search_method_2 == "comments_count"){
@@ -261,7 +261,8 @@ class SearchController extends Controller
       return PostController::buildPosts($postsDates);
     }
 
-    public static function getPostsByLikeCount($searchString)
+    // Cant use search string of 0 becuse they do not exist in the LikesDislikes table
+    public static function getPostsByLikeCount($searchString, $searchMethod)
     {
 
       $postLikes = LikesDislikes::select('post_id', LikesDislikes::raw('COUNT(post_id) as count'))
@@ -271,7 +272,26 @@ class SearchController extends Controller
       ->get()
       ->toArray();
 
-      dd($postLikes);
+      $returnArr = [];
+      
+      foreach($postLikes as $postLike) {
+        if($searchMethod == "less_than") {
+          if(intval($postLike['count']) < intval($searchString)) {
+            array_push($returnArr, Posts::where('id', '=', $postLike['post_id'])->get()->first()->toArray());
+          }
+        }else if($searchMethod == "equal_to") {
+          if($postLike['count'] == $searchString) {
+            array_push($returnArr, Posts::where('id', '=', $postLike['post_id'])->get()->first()->toArray());
+          }
+        }else if($searchMethod == "greater_than") {
+          if(intval($postLike['count']) > intval($searchString)) {
+            array_push($returnArr, Posts::where('id', '=', $postLike['post_id'])->get()->first()->toArray());
+          }
+        }
+      }
+
+      //dd($returnArr);
+      return PostController::buildPosts($returnArr);
     }
 
     // Cant use search string of 0 becuse they do not exixt in the commnets table
