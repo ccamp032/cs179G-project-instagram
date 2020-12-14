@@ -92,7 +92,32 @@ $factory->define(ImgUrl::class, function (Faker $faker) {
     "https://randomwordgenerator.com/img/picture-generator/57e5d1444250a814f1dc8460962e33791c3ad6e04e5074417c2f7dd4914ac7_640.jpg",
     "https://randomwordgenerator.com/img/picture-generator/52e2d6414f51a814f1dc8460962e33791c3ad6e04e507440702d7edc9e4bc5_640.jpg",
     "https://randomwordgenerator.com/img/picture-generator/57e2d64a4d50a814f1dc8460962e33791c3ad6e04e507441722a72dd9f4dc1_640.jpg",
-    "https://randomwordgenerator.com/img/picture-generator/54e8d74b4b54a914f1dc8460962e33791c3ad6e04e507749772772d6964dc0_640.jpg"
+    "https://randomwordgenerator.com/img/picture-generator/54e8d74b4b54a914f1dc8460962e33791c3ad6e04e507749772772d6964dc0_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e1d14a4b52ac14f1dc8460962e33791c3ad6e04e50744074267bd6944bcc_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e3d0424e56a414f1dc8460962e33791c3ad6e04e507441722a72dc9f4ecd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e4d6474356ad14f1dc8460962e33791c3ad6e04e5074417d2d73dc974fcc_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e3dd414d55a514f1dc8460962e33791c3ad6e04e5074417d2e72dd954fcd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e4d0454853a814f1dc8460962e33791c3ad6e04e5074417c2a79dd944acc_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e1d2444856a514f1dc8460962e33791c3ad6e04e50744172297ed29248c7_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/53e3d342435baa14f1dc8460962e33791c3ad6e04e507440762673d69148cd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e6d4474f50a814f1dc8460962e33791c3ad6e04e5074417c2c7fd59e48c3_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/52e1d04b4856a814f1dc8460962e33791c3ad6e04e507440762e7adc9249c5_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e1d74b4a55ab14f1dc8460962e33791c3ad6e04e5074417c2e7dd29145c3_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e6d14b4d55a814f1dc8460962e33791c3ad6e04e507441722779d49448cd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e7d4414d51a814f1dc8460962e33791c3ad6e04e50744172287cd09e49cd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/53e2d0464950aa14f1dc8460962e33791c3ad6e04e507440742a7ad59f49c3_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/52e2d0434f53b10ff3d8992cc12c30771037dbf852547941742673d2964b_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e4dd424f5baa14f1dc8460962e33791c3ad6e04e5074417c2d78d19748cd_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e4d5424850a914f1dc8460962e33791c3ad6e04e50744172297cd5914cc7_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e7d54a4b50ab14f1dc8460962e33791c3ad6e04e507440772d73d49745c0_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e9d1474354a814f1dc8460962e33791c3ad6e04e50744172297cdc9e4fc4_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e3dd424851ac14f1dc8460962e33791c3ad6e04e507441722a72dd914fc7_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e6d64b4c54a414f1dc8460962e33791c3ad6e04e507440752972d3934acc_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e2d74a4d55ae14f1dc8460962e33791c3ad6e04e507441722978d69f4ac2_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e0d6474e56ae14f1dc8460962e33791c3ad6e04e507440752f73dd9249c4_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/54e5d2434953a514f1dc8460962e33791c3ad6e04e507440742f7cd09645cc_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/57e5d74a4f57af14f1dc8460962e33791c3ad6e04e50744172297cd69745c5_640.jpg",
+    "https://randomwordgenerator.com/img/picture-generator/55e6d04a4f56a414f1dc8460962e33791c3ad6e04e507440722d72d19548c1_640.jpg
   );
 
   $rand_keys = array_rand($photoList, 2);
